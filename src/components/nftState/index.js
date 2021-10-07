@@ -7,9 +7,13 @@ import ReactJson from "react-json-view";
 
 const NFTState = () => {
   const [NFTState, setNFTState] = useState(null);
+  const [NFTAddress, setNFTAddress] = useState("");
 
   function onclickHandler(e) {
-    tools.getNftState().then(setNFTState);
+    tools.getNftState(NFTAddress).then(setNFTState);
+  }
+  function addressChangeHandler(e){
+    setNFTAddress(e.target.value)
   }
   return (
     <>
@@ -20,10 +24,18 @@ const NFTState = () => {
           </div>
           <div className="col-md-6">
             <h3>Get KOII State</h3>
-
-            <Button onClick={onclickHandler} className="mt-2" variant="primary">
-              Get State
-            </Button>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Enter NFT address</Form.Label>
+              <Form.Control
+                onChange={addressChangeHandler}
+                type="email"
+                placeholder="User Address"
+              />
+              <Form.Label>Enter Quantity</Form.Label>
+              <Button onClick={onclickHandler} className="mt-2" variant="primary">
+                Send AR
+              </Button>
+            </Form.Group>
             {NFTState ? (
               <ReactJson
                 collapsed={true}
