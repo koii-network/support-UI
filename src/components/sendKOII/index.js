@@ -3,26 +3,21 @@ import Sidebar from "../sidebar";
 import { tools, arweave } from "../../services/KOII";
 import { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-const Balance = () => {
+const SendKOII = () => {
   const [userAddress, setUserAddress] = useState("");
-  const [ArBalance, setUserBalance] = useState("");
-  const [koiiBalance, setKoiiBalance] = useState("");
-  function getUserBalance() {
-    arweave.wallets
-      .getBalance(userAddress)
-      .then((balance) => {
-        setUserBalance(arweave.ar.winstonToAr(balance));
-      });
-    tools.getKoiiState().then((state) => {
-        console.log(state.balances)
-      if (userAddress !== undefined && userAddress in state.balances)
-        setKoiiBalance( state.balances[userAddress]);
-      setKoiiBalance(0);
-    });
+  const [qty, setQty] = useState(0);
+  const [trxId, setTrxId] = useState(null);
+  async function sendKOII() {
+    await window.koiiWallet.connect()
+    tools.transfer(qty,userAddress, "KOI").then(console.log)
+
   }
   function addressChangeHandler(e) {
-    console.log(e.target.value);
     setUserAddress(e.target.value);
+  }
+  function  qtyChangeHandler(e) {
+
+    setQty(e.target.value);
   }
   return (
     <>
@@ -32,6 +27,7 @@ const Balance = () => {
             <Sidebar></Sidebar>
           </div>
           <div className="col-md-6">
+          <h3>Send KOII</h3>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Enter User Arweave Address</Form.Label>
               <Form.Control
@@ -39,15 +35,19 @@ const Balance = () => {
                 type="email"
                 placeholder="User Address"
               />
+              <Form.Label>Enter Quantity</Form.Label>
+              <Form.Control
+                onChange={qtyChangeHandler}
+                type="email"
+                placeholder="Quantity"
+              />
               <Button
-                onClick={getUserBalance}
+                onClick={sendKOII}
                 className="mt-2"
                 variant="primary"
               >
-                Get balance
+                Send KOII
               </Button>
-              <h6>{ArBalance}-AR</h6>
-              <h6>{koiiBalance}-KOII</h6>
             </Form.Group>
           </div>
         </div>
@@ -56,4 +56,4 @@ const Balance = () => {
   );
 };
 
-export default Balance;
+export default SendKOII;

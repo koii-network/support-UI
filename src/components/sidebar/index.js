@@ -10,7 +10,9 @@ function Sidebar() {
         activeKey="/home"
       >
         <div className="sidebar-sticky">
-          <h3 style={{color:"white",fontSize:"20px"}}>KOII Support Actions</h3>
+          <h3 style={{ color: "white", fontSize: "20px" }}>
+            KOII Support Actions
+          </h3>
         </div>
         <Nav.Item>
           <Nav.Link href="/">Get Balance</Nav.Link>
@@ -23,8 +25,21 @@ function Sidebar() {
         <Nav.Item>
           <Nav.Link href="/get-nfts">Get Owner's NFTs</Nav.Link>
         </Nav.Item>
-        <Nav.Link href="/get-nfts">Get Owner's NFTs</Nav.Link>
-        <Nav.Item></Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/Koii-State">Get KOII State</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/attention-State">Get Attention State</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/nft-state">Get NFT State</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/send-koii">Send KOII</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/send-ar">Send AR</Nav.Link>
+        </Nav.Item>
       </Nav>
     </>
   );

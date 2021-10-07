@@ -4,13 +4,12 @@ import { tools, arweave } from "../../services/KOII";
 import { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import ReactJson from "react-json-view";
-const AttentionState = () => {
-  const [attentionState, setAttentionState] = useState(null);
+
+const NFTState = () => {
+  const [NFTState, setNFTState] = useState(null);
 
   function onclickHandler(e) {
-    fetch("https://mainnet.koii.live/attention")
-      .then((res) => res.json())
-      .then(setAttentionState);
+    tools.getNftState().then(setNFTState);
   }
   return (
     <>
@@ -20,24 +19,17 @@ const AttentionState = () => {
             <Sidebar></Sidebar>
           </div>
           <div className="col-md-6">
-            <h3>Get Attention State</h3>
+            <h3>Get KOII State</h3>
 
             <Button onClick={onclickHandler} className="mt-2" variant="primary">
               Get State
             </Button>
-            {/* <JSONPretty className='mt-3' id="json-pretty" data={trxStatus} theme={monikai}></JSONPretty> */}
-
-            {}
-            {attentionState ? (
+            {NFTState ? (
               <ReactJson
                 collapsed={true}
                 groupArraysAfterLength={2}
-                style={{
-                  marginTop: "5px",
-                  minWidth: "1200px",
-                  minHeight: "200px",
-                }}
-                src={attentionState}
+                style={{ marginTop: "5px",minWidth:"1200px",minHeight:"200px" }}
+                src={NFTState}
                 defaultValue={{}}
                 displayDataTypes={false}
                 theme="chalk"
@@ -52,4 +44,4 @@ const AttentionState = () => {
   );
 };
 
-export default AttentionState;
+export default NFTState;
