@@ -26,3 +26,6 @@
     min-width: 0;
     width: 100%;
 }
+.active{
+    color: white;
+}

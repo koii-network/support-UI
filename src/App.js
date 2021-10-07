@@ -7,16 +7,14 @@ import OwnersNFTs from './components/ownersNFTs';
 import KoiiState from './components/koiiState';
 import AttentionState from './components/attentionState';
 import SendKOII from './components/sendKOII';
-import SendA from './/components/sendAr';
 import SendAr from ".//components/sendAr";
 import NFTState from './components/nftState';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/support-UI">
       <div className="App">
         <Switch>
-          <Route path="/" exact component={Balance}></Route>
           <Route path="/transaction-status" component={TransactionStatus}></Route>
           <Route path="/get-nfts" component={OwnersNFTs}></Route>
           <Route path="/Koii-State" component={KoiiState}></Route>
@@ -25,7 +23,7 @@ function App() {
           <Route path="/send-koii" component={SendKOII}></Route>
           <Route path="/send-ar" component={SendAr}></Route>
           <Route path="/send-ar" component={SendAr}></Route>
-
+          <Route path="/" exact component={Balance}></Route>
       
         </Switch>
 
