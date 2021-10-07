@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
 import Sidebar from "./components/sidebar/index";
 import Balance from "./components/checkBalance/index";

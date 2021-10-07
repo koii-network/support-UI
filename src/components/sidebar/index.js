@@ -50,7 +50,7 @@ function Sidebar() {
           </NavLink>
         </Nav.Item>
         <Nav.Item>
-          <NavLink activeClassName="active" to="/support-ui/send-ar">
+          <NavLink activeClassName="active" to="/send-ar">
           <li className="list-group-item list-group-item-primary">Send AR</li>
           </NavLink>
         </Nav.Item>
