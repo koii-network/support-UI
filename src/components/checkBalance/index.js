@@ -8,16 +8,13 @@ const Balance = () => {
   const [ArBalance, setUserBalance] = useState("");
   const [koiiBalance, setKoiiBalance] = useState("");
   function getUserBalance() {
-    arweave.wallets
-      .getBalance(userAddress)
-      .then((balance) => {
-        setUserBalance(arweave.ar.winstonToAr(balance));
-      });
+    arweave.wallets.getBalance(userAddress).then((balance) => {
+      setUserBalance(arweave.ar.winstonToAr(balance));
+    });
     tools.getKoiiState().then((state) => {
-        console.log(state.balances)
       if (userAddress !== undefined && userAddress in state.balances)
-        setKoiiBalance( state.balances[userAddress]);
-      setKoiiBalance(0);
+        setKoiiBalance(state.balances[userAddress]);
+      else setKoiiBalance(0);
     });
   }
   function addressChangeHandler(e) {

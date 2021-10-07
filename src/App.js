@@ -12,7 +12,7 @@ import NFTState from './components/nftState';
 
 function App() {
   return (
-    <Router basename="/support-UI">
+    <Router >
       <div className="App">
         <Switch>
           <Route path="/transaction-status" component={TransactionStatus}></Route>

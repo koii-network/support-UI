@@ -1,7 +1,7 @@
 {
   "name": "support-ui",
   "version": "0.1.0",
-  "homepage": "https://koii-network.github.io/support-UI",
+  "homepage": "http://koiiscan.io",
   "private": true,
   "dependencies": {
     "@_koi/sdk": "^2.4.0",

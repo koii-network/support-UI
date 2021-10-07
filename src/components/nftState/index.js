@@ -12,8 +12,8 @@ const NFTState = () => {
   function onclickHandler(e) {
     tools.getNftState(NFTAddress).then(setNFTState);
   }
-  function addressChangeHandler(e){
-    setNFTAddress(e.target.value)
+  function addressChangeHandler(e) {
+    setNFTAddress(e.target.value);
   }
   return (
     <>
@@ -31,16 +31,31 @@ const NFTState = () => {
                 type="email"
                 placeholder="User Address"
               />
-              <Form.Label>Enter Quantity</Form.Label>
-              <Button onClick={onclickHandler} className="mt-2" variant="primary">
-                Send AR
-              </Button>
+              <div className="row">
+                <div className="col-md-3">
+                  <Form.Label>Enter Quantity</Form.Label>
+                </div>
+              </div>
+              
+              <div className="col-md-3">
+                <Button
+                  onClick={onclickHandler}
+                  className="mt-2"
+                  variant="primary"
+                >
+                  Get NFT state
+                </Button>
+              </div>
             </Form.Group>
             {NFTState ? (
               <ReactJson
                 collapsed={true}
                 groupArraysAfterLength={2}
-                style={{ marginTop: "5px",minWidth:"1200px",minHeight:"200px" }}
+                style={{
+                  marginTop: "5px",
+                  minWidth: "1200px",
+                  minHeight: "200px",
+                }}
                 src={NFTState}
                 defaultValue={{}}
                 displayDataTypes={false}
