@@ -11,7 +11,7 @@ const SendAr = () => {
 
   async function sendKOII() {
     await window.koiiWallet.connect();
-    tools.transfer(qty, userAddress, "AR").then(console.log);
+    tools.transfer(qty, userAddress, "AR").then(setTrxId);
   }
   function addressChangeHandler(e) {
     setUserAddress(e.target.value);
@@ -45,6 +45,7 @@ const SendAr = () => {
                 Send AR
               </Button>
             </Form.Group>
+            {trxId?(<p>Ar sent your trxId is {trxId}</p>):""}
           </div>
         </div>
       </div>

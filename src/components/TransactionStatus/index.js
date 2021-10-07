@@ -3,8 +3,6 @@ import Sidebar from "../sidebar";
 import { tools, arweave } from "../../services/KOII";
 import { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import JSONPretty from 'react-json-pretty';
-import monikai from 'react-json-pretty/themes/monikai.css';
 import ReactJson from 'react-json-view'
 const TransactionStatus = () => {
   const [trxId, setTrxId] = useState("");

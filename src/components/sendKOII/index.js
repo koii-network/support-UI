@@ -9,7 +9,7 @@ const SendKOII = () => {
   const [trxId, setTrxId] = useState(null);
   async function sendKOII() {
     await window.koiiWallet.connect()
-    tools.transfer(qty,userAddress, "KOI").then(console.log)
+    tools.transfer(qty,userAddress, "KOI").then(setTrxId)
 
   }
   function addressChangeHandler(e) {
@@ -23,6 +23,7 @@ const SendKOII = () => {
     <>
       <div className="container">
         <div className="row">
+
           <div className="col-md-2 col-md-offset-12">
             <Sidebar></Sidebar>
           </div>
@@ -49,6 +50,7 @@ const SendKOII = () => {
                 Send KOII
               </Button>
             </Form.Group>
+            {trxId?(<p>KOII sent your trxId is {trxId}</p>):""}
           </div>
         </div>
       </div>

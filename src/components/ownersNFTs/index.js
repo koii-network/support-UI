@@ -3,8 +3,7 @@ import Sidebar from "../sidebar";
 import { tools, arweave } from "../../services/KOII";
 import { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import JSONPretty from "react-json-pretty";
-import monikai from "react-json-pretty/themes/monikai.css";
+import ReactJson from "react-json-view";
 const OwnersNFTs = () => {
   const [ownerAddress, setOwnerAddress] = useState("");
   const [nfts, setNfts] = useState("");
@@ -52,12 +51,19 @@ const OwnersNFTs = () => {
               >
                 Get NFTs
               </Button>
-              <JSONPretty
-                className="mt-3"
-                id="json-pretty"
-                data={nfts}
-                theme={monikai}
-              ></JSONPretty>
+              {nfts ? (
+              <ReactJson
+                collapsed={true}
+                groupArraysAfterLength={2}
+                style={{ marginTop: "5px",minWidth:"1200px",minHeight:"200px" }}
+                src={nfts}
+                defaultValue={{}}
+                displayDataTypes={false}
+                theme="chalk"
+              />
+            ) : (
+              ""
+            )}
             </Form.Group>
           </div>
         </div>
