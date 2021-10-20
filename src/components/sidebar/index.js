@@ -54,6 +54,12 @@ function Sidebar() {
           <li className="list-group-item list-group-item-primary">Send AR</li>
           </NavLink>
         </Nav.Item>
+
+        <Nav.Item>
+          <NavLink activeClassName="active" to="/bridge-info">
+          <li className="list-group-item list-group-item-primary">Bridge Info</li>
+          </NavLink>
+        </Nav.Item>
       </Nav>
     </>
   );

@@ -9,6 +9,7 @@ import AttentionState from './components/attentionState';
 import SendKOII from './components/sendKOII';
 import SendAr from ".//components/sendAr";
 import NFTState from './components/nftState';
+import BridgeInfo from './components/bridgeinfo';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/send-koii" component={SendKOII}></Route>
           <Route path="/send-ar" component={SendAr}></Route>
           <Route path="/send-ar" component={SendAr}></Route>
+          <Route path="/bridge-info" component={BridgeInfo}></Route>
           <Route path="/" exact component={Balance}></Route>
       
         </Switch>
