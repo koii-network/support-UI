@@ -24,7 +24,7 @@ const ContractTransactions = () => {
   }
 
   function contractChangeHandler(e) {
-    contracts = e.target.value.split(",");
+    contracts = e.target.value;
   }
 
   return (
