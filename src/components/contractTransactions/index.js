@@ -8,19 +8,24 @@ import ReactJson from "react-json-view";
 const ContractTransactions = () => {
   const [defaultContract, setDefaultContract] = useState(null);
   const [transactions, setTransactions] = useState(null);
+  let contracts = "";
 
   tools.getAttentionId().then((e) => {
-    setDefaultContract(tools.contractId + ", " + e);
+    contracts = tools.contractId + ", " + e;
+    setDefaultContract(contracts);
   });
 
   function getTransactions(e) {
-    const queryContracts = JSON.stringify(e.target.value);
+    const queryContracts = JSON.stringify(contracts.split(","));
     const query = `query{transactions(first:100,tags:[{name:"App-Name",values:["SmartWeaveAction"]},{name:"Contract",values:${queryContracts}}]){edges{node{id block{height}}}}}`;
     tools.gql(JSON.stringify({query})).then((f) => {
       setTransactions(f.data.transactions.edges);
     }).catch(alert);
   }
 
+  function contractChangeHandler(e) {
+    contracts = e.target.value.split(",");
+  }
 
   return (
     <>
@@ -34,6 +39,7 @@ const ContractTransactions = () => {
             <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Contract IDs (comma separated)</Form.Label>
               <Form.Control
+                onChange={contractChangeHandler}
                 as="textarea"
                 placeholder="Contract IDs"
                 defaultValue={defaultContract}
