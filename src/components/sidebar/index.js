@@ -60,6 +60,11 @@ function Sidebar() {
           <li className="list-group-item list-group-item-primary">Bridge Info</li>
           </NavLink>
         </Nav.Item>
+        <Nav.Item>
+          <NavLink activeClassName="active" to="/contract-transactions">
+          <li className="list-group-item list-group-item-primary">Contract Transactions</li>
+          </NavLink>
+        </Nav.Item>
       </Nav>
     </>
   );

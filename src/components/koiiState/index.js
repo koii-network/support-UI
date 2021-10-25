@@ -31,7 +31,6 @@ const KoIIState = () => {
             {koiiState ? (
               <ReactJson
                 collapsed={true}
-                groupArraysAfterLength={2}
                 style={{ marginTop: "5px",minWidth:"1200px",minHeight:"200px" }}
                 src={koiiState}
                 defaultValue={{}}
