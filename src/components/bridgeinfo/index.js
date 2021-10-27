@@ -63,7 +63,7 @@ const BridgeInfo = () => {
               <Form.Label>
               Use
               <spam data-tip="The opensea url is the link of your NFT on opensea"> opensea url* </spam> 
-              or your 
+              or  
               <spam data-tip='You could find it in your Finnie or Koi.rocks content. Click the "Share" button and after the last "/"(it has 43 characters) is your NFT id'> Koii NFT id*</spam>
               <ReactTooltip />
                 </Form.Label>
