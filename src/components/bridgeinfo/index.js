@@ -5,6 +5,60 @@ import ReactTooltip from 'react-tooltip';
 import Sidebar from "../sidebar";
 
 const BridgeInfo = () => {
+  const ETH = () => (
+    <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Label>
+      Enter your
+      <spam data-tip data-for="opensea"> opensea url<i class="far fa-question-circle"></i> </spam>
+        <ReactTooltip id='opensea'>
+        <div>The opensea url is the link of your NFT on opensea</div>
+        <img src="opensea.png"  width="500px" />              
+        </ReactTooltip> 
+      </Form.Label>
+      <Form.Control
+        onChange={NFTidChangeHandler}
+        type="email"
+        placeholder='https://opensea.io/assets/...'
+      />
+      <Button onClick={Getinfo} className="mt-2" variant="primary">
+        Look Up My NFT
+      </Button>
+      <ReactJson style={{marginTop:"5px"}} src={trxStatus} defaultValue={{}} theme="chalk" />
+    </Form.Group>
+  );
+  const AR = () => (
+    <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Label>
+      Enter your
+      <spam data-tip data-for="ar"> Koii NFT id<i class="far fa-question-circle"></i></spam>
+        <ReactTooltip id='ar'> 
+        <div>You could find it in your Finnie or Koi.rocks content.<br/> Click the "Share" button and after the last "/"(it has 43 characters) is your NFT id</div>
+        <img src="ar.png"  width="500px" />              
+        </ReactTooltip> 
+      </Form.Label>
+      <Form.Control
+        onChange={NFTidChangeHandler}
+        type="email"
+        placeholder='qwerty12345...'
+      />
+      <Button onClick={Getinfo} className="mt-2" variant="primary">
+        Look Up My NFT
+      </Button>
+      <ReactJson style={{marginTop:"5px"}} src={trxStatus} defaultValue={{}} theme="chalk" />
+    </Form.Group>
+  );
+  const [showeth, setshoweth] = useState(false);
+  const [showar, setshowar] = useState(false);
+  const chooseETH = () => {
+    setshoweth(true);
+    setshowar(false);
+  }
+    
+  const chooseAR = () => {
+    setshoweth(false);
+    setshowar(true);
+  }
+  
   const [trxStatus, setTrxStatus] = useState("");
   const [NFTid, setNFTid] = useState("");
 
@@ -45,7 +99,7 @@ const BridgeInfo = () => {
   function NFTidChangeHandler(e) {
     setNFTid(e.target.value);
   }
-  
+
   return (
     <>
       <div className="container">
@@ -59,38 +113,33 @@ const BridgeInfo = () => {
             <h5>You can see its origins and its path across the decentralized web, and the stones it has stepped on along the way.</h5>
             <br></br>
             <br></br>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>
-              Use
-              <spam data-tip data-for="opensea"> opensea url<i class="far fa-question-circle"></i> </spam>
-              <ReactTooltip id='opensea'>
-              <div>The opensea url is the link of your NFT on opensea</div>
-              <img src="opensea.png"  width="500px" />              
-              </ReactTooltip> 
-              or  
-              <spam data-tip data-for="ar"> Koii NFT id<i class="far fa-question-circle"></i></spam>
-              <ReactTooltip id='ar'> 
-              <div>You could find it in your Finnie or Koi.rocks content.<br/> Click the "Share" button and after the last "/"(it has 43 characters) is your NFT id</div>
-              <img src="ar.png"  width="500px" />              
-              </ReactTooltip> 
-             
+            <h5>Where did you get your NFT?</h5>
 
-                </Form.Label>
-              <Form.Control
-                onChange={NFTidChangeHandler}
-                type="email"
-                placeholder='"https://opensea.io/assets/..." or "qwerty12345..."'
-              />
-              <Button onClick={Getinfo} className="mt-2" variant="primary">
-                Get your NFT bridge info
+            <div className="row">
+              <div className="col-md-6">
+                <div className="d-grid gap-2">
+              <Button onClick={chooseETH} className="mt-2 mb-3" size="md" variant="primary">
+                Opensea
               </Button>
-              <ReactJson style={{marginTop:"5px"}} src={trxStatus} defaultValue={{}} theme="chalk" />
-            </Form.Group>
+              
+              </div>
+              </div>
+              <div className="col-md-6">
+              <div className="d-grid gap-2">
+              <Button onClick={chooseAR} className="mt-2 mb-3" size="md"  variant="primary">
+                Arweave
+              </Button>
+              </div>
+              </div>
+              { showar ? <AR /> : null }
+              { showeth ? <ETH /> : null }
+            </div>         
           </div>
         </div>
       </div>
     </>
   );
 };
+
 
 export default BridgeInfo;
