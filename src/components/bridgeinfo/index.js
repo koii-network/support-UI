@@ -62,14 +62,14 @@ const BridgeInfo = () => {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>
               Use
-              <spam data-tip data-for="opensea"> opensea url* </spam>
+              <spam data-tip data-for="opensea"> opensea url<i class="far fa-question-circle"></i> </spam>
               <ReactTooltip id='opensea'>
               <div>The opensea url is the link of your NFT on opensea</div>
               <img src="opensea.png"  width="500px" />              
               </ReactTooltip> 
               or  
-              <spam data-tip data-for="ar"> Koii NFT id*</spam>
-              <ReactTooltip id='ar'>
+              <spam data-tip data-for="ar"> Koii NFT id<i class="far fa-question-circle"></i></spam>
+              <ReactTooltip id='ar'> 
               <div>You could find it in your Finnie or Koi.rocks content.<br/> Click the "Share" button and after the last "/"(it has 43 characters) is your NFT id</div>
               <img src="ar.png"  width="500px" />              
               </ReactTooltip> 
