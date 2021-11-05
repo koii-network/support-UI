@@ -11,6 +11,7 @@ import SendAr from ".//components/sendAr";
 import NFTState from './components/nftState';
 import BridgeInfo from './components/bridgeinfo';
 import contractTransactions from "./components/contractTransactions";
+import DID from "./components/did"
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/send-ar" component={SendAr}></Route>
           <Route path="/send-ar" component={SendAr}></Route>
           <Route path="/bridge-info" component={BridgeInfo}></Route>
+          <Route path="/did" exact component={DID}></Route>
           <Route path="/" exact component={Balance}></Route>
           <Route path="/contract-transactions" exact component={contractTransactions}></Route>
       
