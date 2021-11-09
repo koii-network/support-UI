@@ -3,6 +3,7 @@ import Sidebar from "../sidebar";
 import { Form, Button, Tabs, Tab } from "react-bootstrap";
 import did from "DID-SDK";
 import CreateDid from "./createDid";
+import UpdateDid from './updateDid';
 
 const DID = () => {
   const [key, setKey] = useState("create");
@@ -20,14 +21,14 @@ const DID = () => {
               onSelect={(k) => setKey(k)}
               className="mb-3"
             >
-              <Tab eventKey="create" title="Home">
+              <Tab eventKey="create" title="Create DID">
+            
 
               </Tab>
-              <Tab eventKey="update" title="Profile">
-                <h1>hello</h1>
+              <Tab eventKey="update" title="Update DID">
               </Tab>
             </Tabs>
-            {key==="create"?(<CreateDid></CreateDid>):""}
+              {key==="update"?(<UpdateDid></UpdateDid>):<CreateDid></CreateDid>}
           </div>
         </div>
       </div>

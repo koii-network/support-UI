@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Form, Button, Card, Row, Col, Modal } from "react-bootstrap";
-import {createDID} from 'DID-SDK';
+import {createDID, burnKOIIAndMigrateContent} from 'DID-SDK';
 const Error = (props) => {
   return (
     <Modal show={props.show} onHide={props.handleClose}>
@@ -29,6 +29,7 @@ const CreateDid = () => {
   const [linkCount, setLinkCount] = useState(1);
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
+  const [didId, setDidId] = useState(null);
   function handleLinkChange(id, value) {
     console.log(id, value);
     let links = [...didState.links];
@@ -105,6 +106,7 @@ const CreateDid = () => {
           <Form.Group className="mb-3" controlId={`t-${i}`}>
             <Form.Label>Title</Form.Label>
             <Form.Control
+            required
               type="text"
               placeholder="LinkedIn, Instagram, Twitter ....."
               value={linkState?.i?.title}
@@ -119,6 +121,7 @@ const CreateDid = () => {
             <Form.Label>Title</Form.Label>
             <Form.Control
               type="text"
+              required
               placeholder="e.g https://linked.com/Arnald"
               value={linkState?.i?.value}
               onChange={(e) => {
@@ -148,13 +151,15 @@ const CreateDid = () => {
     createDID(didState).then((txId)=>{
         alert(txId);
         console.log(txId)
+        burnKOIIAndMigrateContent(txId)
+        setDidId(txId)
     });
-    alert("ss")
 
   }
 
   return (
     <div>
+      <h3>Create DID</h3>
       {error ? (
         <Error
           show={show}
@@ -171,6 +176,7 @@ const CreateDid = () => {
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
+            required
             onChange={(e) => {
               inputHandler(e.target.id, e.target.value);
             }}
@@ -179,19 +185,19 @@ const CreateDid = () => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="description">
           <Form.Label>Description</Form.Label>
-          <Form.Control type="text" placeholder="Enter Description" onChange={(e) => {
+          <Form.Control type="text" required placeholder="Enter Description" onChange={(e) => {
               inputHandler(e.target.id, e.target.value);
             }} />
         </Form.Group>
         <Form.Group className="mb-3" controlId="picture">
           <Form.Label>Profile Picture transaction Id</Form.Label>
-          <Form.Control type="text" placeholder="Enter Profile Picture Tx Id" onChange={(e) => {
+          <Form.Control type="text" required placeholder="Enter Profile Picture Tx Id" onChange={(e) => {
               inputHandler(e.target.id, e.target.value);
             }} />
         </Form.Group>
         <Form.Group className="mb-3" controlId="banner">
           <Form.Label>banner Picture transaction Id</Form.Label>
-          <Form.Control type="text" placeholder="Enter banner image Tx Id" onChange={(e) => {
+          <Form.Control required type="text" placeholder="Enter banner image Tx Id" onChange={(e) => {
               inputHandler(e.target.id, e.target.value);
             }} />
         </Form.Group>
@@ -205,7 +211,7 @@ const CreateDid = () => {
               <Row>
                 <Col>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Titleeeeee</Form.Label>
+                    <Form.Label>Title</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="LinkedIn, Instagram, Twitter ....."
@@ -237,12 +243,15 @@ const CreateDid = () => {
           </Card.Body>
         </Card>
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
+
         </Form.Group>
         <Button variant="primary"  type="submit">
           Submit
         </Button>
       </Form>
+      {didId?(
+        <h3>DID Deployed. see your did at <code>https://arweave.net/{didId}</code></h3>
+      ):""}
     </div>
   );
 };
