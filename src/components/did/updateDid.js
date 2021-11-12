@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Form, Button, Card, Row, Col, Modal } from "react-bootstrap";
-import {getDIdState,updateDID,burnKOIIAndMigrateContent} from 'DID-SDK'
-import { createDID } from "DID-SDK";
+import { getDIdState, updateDID, burnKOIIAndMigrateContent } from "@_koi/did";
 const Error = (props) => {
   return (
     <Modal show={props.show} onHide={props.handleClose}>
@@ -25,7 +24,6 @@ const UpdateDid = () => {
   const [error, setError] = useState("");
   const [didId, setDidId] = useState(null);
   function handleLinkChange(id, value) {
-    console.log(id, value);
     let links = [...didState.links];
     let [prop, index] = id.split("-");
 
@@ -103,7 +101,7 @@ const UpdateDid = () => {
               required
               type="text"
               placeholder="LinkedIn, Instagram, Twitter ....."
-              value={didState.data.links[i]["title"]}
+              value={didState.links[i]["title"]}
               onChange={(e) => {
                 handleLinkChange(e.target.id, e.target.value);
               }}
@@ -117,7 +115,7 @@ const UpdateDid = () => {
               type="text"
               required
               placeholder="e.g https://linked.com/Arnald"
-              value={didState.data.links[i]["link"]}
+              value={didState.links[i]["link"]}
               onChange={(e) => {
                 handleLinkChange(e.target.id, e.target.value);
               }}
@@ -142,24 +140,19 @@ const UpdateDid = () => {
   }
   function submit(e) {
     e.preventDefault();
-    createDID(didState).then((txId) => {
-      console.log(txId);
-      console.log("Burn KOII called")
-      setDidId(txId);
-    });
+    updateDID(didId,didState).then(console.log);
   }
-  function getDidStateHandler(){
-       getDIdState(didId).then(res=>{
-           console.log(res)
-           if(res.status!==200){
-               handleShow(res.message)
-           }else{
-               setDidState(res.data)
-               setLinkCount(res.data.data.links.length)
-               alert(res.data.data.links.length)
-           }
-       })
-
+  function getDidStateHandler() {
+    getDIdState(didId).then((res) => {
+      console.log(res);
+      if (res.status !== 200) {
+        handleShow(res.message);
+      } else {
+        setDidState(res.data.data);
+        setLinkCount(res.data.data.links.length);
+        alert(res.data.data.links.length);
+      }
+    });
   }
   return (
     <div>
@@ -174,14 +167,25 @@ const UpdateDid = () => {
       ) : (
         ""
       )}
-
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>Enter you DID Id</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="DID Id"
+          value={didId}
+          onChange={(e) => setDidId(e.target.value)}
+        />
+      </Form.Group>
+      <Button onClick={getDidStateHandler} variant="primary" type="buuton">
+        Submit
+      </Button>
       {didState ? (
         <Form onSubmit={submit}>
           <Form.Group className="mb-3" controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
-              value={didState.data.name}
+              value={didState.name}
               required
               onChange={(e) => {
                 inputHandler(e.target.id, e.target.value);
@@ -193,7 +197,7 @@ const UpdateDid = () => {
             <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
-              value={didState.data.description}
+              value={didState.description}
               required
               placeholder="Enter Description"
               onChange={(e) => {
@@ -206,7 +210,7 @@ const UpdateDid = () => {
             <Form.Control
               type="text"
               required
-              value={didState.data.picture}
+              value={didState.picture}
               placeholder="Enter Profile Picture Tx Id"
               onChange={(e) => {
                 inputHandler(e.target.id, e.target.value);
@@ -217,7 +221,7 @@ const UpdateDid = () => {
             <Form.Label>banner Picture transaction Id</Form.Label>
             <Form.Control
               required
-              value={didState.data.banner}
+              value={didState.banner}
               type="text"
               placeholder="Enter banner image Tx Id"
               onChange={(e) => {
@@ -271,27 +275,14 @@ const UpdateDid = () => {
             controlId="formBasicCheckbox"
           ></Form.Group>
           <Button variant="primary" type="submit">
-            Submit
+            Update
           </Button>
         </Form>
       ) : (
         ""
       )}
 
-      <>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Enter you DID Id</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="DID Id"
-            value={didId}
-            onChange={(e) => setDidId(e.target.value)}
-          />
-        </Form.Group>
-        <Button onClick={getDidStateHandler} variant="primary" type="buuton">
-          Submit
-        </Button>
-      </>
+      <></>
     </div>
   );
 };

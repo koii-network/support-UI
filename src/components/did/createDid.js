@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Form, Button, Card, Row, Col, Modal } from "react-bootstrap";
-import {createDID, burnKOIIAndMigrateContent} from 'DID-SDK';
+import {createDID, burnKOIIAndMigrateContent} from '@_koi/did';
 const Error = (props) => {
   return (
     <Modal show={props.show} onHide={props.handleClose}>
@@ -149,7 +149,6 @@ const CreateDid = () => {
   function submit(e) {
     e.preventDefault();
     createDID(didState).then((txId)=>{
-        alert(txId);
         console.log(txId)
         burnKOIIAndMigrateContent(txId)
         setDidId(txId)

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "../sidebar";
 import { Form, Button, Tabs, Tab } from "react-bootstrap";
-import did from "DID-SDK";
 import CreateDid from "./createDid";
 import UpdateDid from './updateDid';
 
