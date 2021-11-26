@@ -23,6 +23,7 @@ const UpdateDid = () => {
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
   const [didId, setDidId] = useState(null);
+  const [updated, setUpdated] = useState(false);
   function handleLinkChange(id, value) {
     let links = [...didState.links];
     let [prop, index] = id.split("-");
@@ -140,7 +141,10 @@ const UpdateDid = () => {
   }
   function submit(e) {
     e.preventDefault();
-    updateDID(didId,didState).then(console.log);
+    window.koiiWallet.updateDID(didState,didId).then((res)=>{
+      console.log(res)
+      setUpdated(true)
+    });
   }
   function getDidStateHandler() {
     getDIdState(didId).then((res) => {
@@ -150,13 +154,14 @@ const UpdateDid = () => {
       } else {
         setDidState(res.data.data);
         setLinkCount(res.data.data.links.length);
-        alert(res.data.data.links.length);
+
       }
     });
   }
   return (
     <div>
       <h3>Update DID</h3>
+      {updated?(<h4>DID Update Initialized</h4>):""}
       {error ? (
         <Error
           show={show}

@@ -1,6 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Form, Button, Card, Row, Col, Modal } from "react-bootstrap";
-import {createDID, burnKOIIAndMigrateContent} from '@_koi/did';
+import {
+  Form,
+  Button,
+  Card,
+  Row,
+  Col,
+  Modal,
+  Dropdown,
+  DropdownButton,
+  ButtonGroup,
+  FormLabel,
+} from "react-bootstrap";
+import { UnControlled as CodeMirror } from "react-codemirror2";
+import "codemirror/lib/codemirror.css";
+import "codemirror/theme/material.css";
+import "codemirror/mode/css/css";
 const Error = (props) => {
   return (
     <Modal show={props.show} onHide={props.handleClose}>
@@ -27,9 +41,26 @@ const CreateDid = () => {
   });
   const [linkState, setLinkState] = useState({});
   const [linkCount, setLinkCount] = useState(1);
+  const [addressCount, setAddressCount] = useState(1);
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
   const [didId, setDidId] = useState(null);
+  const [addresses, setAddresses] = useState([]);
+  const [currencies, setCurrencies] = useState([
+    "Bitcoin",
+    "Ethereum",
+    "BInance Coin",
+    "Tether",
+    "Solana",
+    "Cardano",
+    "XRP",
+    "Polkadot",
+    "Avalanche",
+    "Shiba",
+  ]);
+  const [code, setCode] = useState(
+    "body{\n    color:white;\n  }\n  header{\n font-size:30px;\n}"
+  );
   function handleLinkChange(id, value) {
     console.log(id, value);
     let links = [...didState.links];
@@ -51,6 +82,7 @@ const CreateDid = () => {
       }
       links.push(link);
     }
+
     setDidState({ ...didState, links });
 
     // setLinkState(
@@ -68,6 +100,38 @@ const CreateDid = () => {
     // setLinkState({
     //     didState.links[2].title:2
     // })
+  }
+  function getUsedCurrencies(){
+    let c = []
+    for(let i=0;i<addresses.length;i++){
+      c.push(addresses[i]["name"])
+    }
+
+  }
+  function handleAddressChange(id, value) {
+    console.log(id, value);
+    let dupAddresses = JSON.parse(JSON.stringify(addresses))
+    let [prop, index] = id.split("-");
+    let address = {}
+
+      if (addresses[index]) {
+         address = dupAddresses[index];
+        if (prop === "ta") {
+          address.name = value;
+        } else if (prop === "va") {
+          address.value = value;
+        }
+      } else {
+        address = {};
+        if (prop === "ta") {
+          address.name = value;
+        } else if (prop === "va") {
+          address.value = value;
+        }
+        dupAddresses.push(address)
+
+      }
+      setAddresses(dupAddresses)
   }
 
   const handleClose = () => {
@@ -89,6 +153,23 @@ const CreateDid = () => {
       setLinkCount(linkCount + 1);
     } else handleShow("You can add upto 5 links");
   }
+  function addAddress() {
+    // let links = [...didState.links];
+    // links.push({
+    //   title: "",
+    //   link: "",
+    // });
+    // setDidState({ ...didState, links });
+    setAddressCount(addressCount + 1);
+  }
+  function removeAddress() {
+    if (addressCount < 2) {
+      handleShow("You can must add a link");
+    } else {
+    
+      setAddressCount(addressCount - 1);
+    }
+  }
   function removeLink() {
     if (linkCount < 2) {
       handleShow("You can must add a link");
@@ -106,7 +187,7 @@ const CreateDid = () => {
           <Form.Group className="mb-3" controlId={`t-${i}`}>
             <Form.Label>Title</Form.Label>
             <Form.Control
-            required
+              required
               type="text"
               placeholder="LinkedIn, Instagram, Twitter ....."
               value={linkState?.i?.title}
@@ -140,6 +221,47 @@ const CreateDid = () => {
     }
     return items;
   }
+  function getAddressItem(i) {
+    return (
+      <Row key={i}>
+        <Col>
+          <Form.Label>Currency</Form.Label>
+          <select
+            class="form-control"
+            id={`ta-${i}`}
+            onChange={(e) => {
+              handleAddressChange(e.target.id, e.target.value);
+            }}
+          >
+            {currencies.map((e) => (
+              <option>{e}</option>
+            ))}
+          </select>
+        </Col>
+        <Col>
+          <Form.Group className="mb-3" controlId={`va-${i}`}>
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              placeholder="0x000000000000000"
+              value={linkState?.i?.value}
+              onChange={(e) => {
+                handleAddressChange(e.target.id, e.target.value);
+              }}
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+    );
+  }
+  function generateAddressTable() {
+    const items = [];
+    for (let i = 0; i < addressCount; i++) {
+      items.push(getAddressItem(i));
+    }
+    return items;
+  }
   function inputHandler(id, value) {
     setDidState({
       ...didState,
@@ -148,12 +270,14 @@ const CreateDid = () => {
   }
   function submit(e) {
     e.preventDefault();
-    createDID(didState).then((txId)=>{
-        console.log(txId)
-        burnKOIIAndMigrateContent(txId)
-        setDidId(txId)
-    });
-
+    let state = JSON.parse(JSON.stringify(didState));
+    state.css = code;
+    console.error(state);
+    // window.koiiWallet.createDID(didState).then((txId) => {
+    // console.log(txId);
+    // burnKOIIAndMigrateContent(txId)
+    // setDidId(txId.data);
+    // });
   }
 
   return (
@@ -184,21 +308,36 @@ const CreateDid = () => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="description">
           <Form.Label>Description</Form.Label>
-          <Form.Control type="text" required placeholder="Enter Description" onChange={(e) => {
+          <Form.Control
+            type="text"
+            required
+            placeholder="Enter Description"
+            onChange={(e) => {
               inputHandler(e.target.id, e.target.value);
-            }} />
+            }}
+          />
         </Form.Group>
         <Form.Group className="mb-3" controlId="picture">
           <Form.Label>Profile Picture transaction Id</Form.Label>
-          <Form.Control type="text" required placeholder="Enter Profile Picture Tx Id" onChange={(e) => {
+          <Form.Control
+            type="text"
+            required
+            placeholder="Enter Profile Picture Tx Id"
+            onChange={(e) => {
               inputHandler(e.target.id, e.target.value);
-            }} />
+            }}
+          />
         </Form.Group>
         <Form.Group className="mb-3" controlId="banner">
           <Form.Label>banner Picture transaction Id</Form.Label>
-          <Form.Control required type="text" placeholder="Enter banner image Tx Id" onChange={(e) => {
+          <Form.Control
+            required
+            type="text"
+            placeholder="Enter banner image Tx Id"
+            onChange={(e) => {
               inputHandler(e.target.id, e.target.value);
-            }} />
+            }}
+          />
         </Form.Group>
 
         <Card border="primary">
@@ -240,17 +379,58 @@ const CreateDid = () => {
               Remove
             </Button>
           </Card.Body>
+          {/* Addresses */}
         </Card>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+        <Card border="primary">
+          <Card.Header>Other Crypto Addresses</Card.Header>
+          <Card.Body>
+            {generateAddressTable()}
 
-        </Form.Group>
-        <Button variant="primary"  type="submit">
+            <Button variant="success" onClick={addAddress}>
+              +Add
+            </Button>
+            <Button
+              style={{ marginLeft: "5px" }}
+              variant="danger"
+              onClick={removeAddress}
+            >
+              Remove
+            </Button>
+          </Card.Body>
+        </Card>
+
+        <Form.Group className="mb-3" controlId="formBasicCheckbox"></Form.Group>
+        {/* <Editor
+          value={code}
+          onValueChange={setCode}
+          highlight={(code) => highlight(code, languages.css)}
+          padding={10}
+          style={{
+            fontFamily: '"Fira code", "Fira Mono", monospace',
+            fontSize: 12,
+          }}
+        /> */}
+        <CodeMirror
+          value={code}
+          options={{
+            theme: "material",
+            lineNumbers: true,
+          }}
+          onChange={(editor, data, value) => {
+            setCode(value);
+          }}
+        />
+        <Button variant="primary" type="submit">
           Submit
         </Button>
       </Form>
-      {didId?(
-        <h3>DID Deployed. see your did at <code>https://arweave.net/{didId}</code></h3>
-      ):""}
+      {didId ? (
+        <h3>
+          DID Deployed. see your did at <code>https://arweave.net/{didId}</code>
+        </h3>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
