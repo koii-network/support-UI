@@ -57,18 +57,6 @@ const CreateDid = () => {
   const [error, setError] = useState("");
   const [didId, setDidId] = useState(null);
   const [addresses, setAddresses] = useState([]);
-  // const [currencies, setCurrencies] = useState([
-  //   "Bitcoin",
-  //   "Ethereum",
-  //   "Binance Coin",
-  //   "Tether",
-  //   "Solana",
-  //   "Cardano",
-  //   "XRP",
-  //   "Polkadot",
-  //   "Avalanche",
-  //   "Shiba",
-  // ]);
   const [code, setCode] = useState(
     "body{\n    color:white;\n  }\n  header{\n font-size:30px;\n}"
   );
@@ -112,39 +100,6 @@ const CreateDid = () => {
     //     didState.links[2].title:2
     // })
   }
-  function getUsedCurrencies(){
-    let c = []
-    for(let i=0;i<addresses.length;i++){
-      c.push(addresses[i]["name"])
-    }
-
-  }
-  const handleAddressChange = (id, value) => {
-    // console.log(id, value);
-    let dupAddresses = JSON.parse(JSON.stringify(addresses))
-    let [prop, index] = id.split("-");
-    let address = {}
-
-      if (addresses[index]) {
-         address = dupAddresses[index];
-        if (prop === "ta") {
-          address.name = value;
-        } else if (prop === "va") {
-          address.value = value;
-        }
-      } else {
-        address = {};
-        if (prop === "ta") {
-          address.name = value;
-        } else if (prop === "va") {
-          address.value = value;
-        }
-        dupAddresses.push(address)
-
-      }
-      setAddresses(dupAddresses)
-  }
-
   const handleClose = () => {
     setShow(false);
     setError("");
@@ -163,25 +118,6 @@ const CreateDid = () => {
       setDidState({ ...didState, links });
       setLinkCount(linkCount + 1);
     } else handleShow("You can add upto 5 links");
-  }
-  const addCustomAddress = () => {
-
-  }
-  function addAddress() {
-    // let links = [...didState.links];
-    // links.push({
-    //   title: "",
-    //   link: "",
-    // });
-    // setDidState({ ...didState, links });
-    setAddressCount(addressCount + 1);
-  }
-  function removeAddress() {
-    if (addressCount < 2) {
-      handleShow("You can must add an address");
-    } else {
-      setAddressCount(addressCount - 1);
-    }
   }
   function removeLink() {
     if (linkCount < 2) {
@@ -234,6 +170,26 @@ const CreateDid = () => {
     }
     return items;
   }
+  function addAddress() {
+    // let links = [...didState.links];
+    // links.push({
+    //   title: "",
+    //   link: "",
+    // });
+    // setDidState({ ...didState, links });
+    setAddressCount(addressCount + 1);
+  }
+  function removeAddress() {
+    if (addressCount < 2) {
+      handleShow("You can must add an address");
+    } else {
+      setAddressCount(addressCount - 1);
+    }
+  }
+
+  const addCustomAddress = () => {
+
+  }
   const getUpdatedCurrencies = () => {
     const renderCurrencies = []
     currencies.forEach((cur, i) => {
@@ -244,7 +200,31 @@ const CreateDid = () => {
     })
     return renderCurrencies;
   }
-  function getAddressItem(i) {
+  const handleAddressChange = (id, value) => {
+    // console.log(id, value);
+    let dupAddresses = JSON.parse(JSON.stringify(addresses))
+    let [prop, index] = id.split("-");
+    let address = {}
+
+      if (addresses[index]) {
+         address = dupAddresses[index];
+        if (prop === "ta") {
+          address.name = value;
+        } else if (prop === "va") {
+          address.value = value;
+        }
+      } else {
+        address = {};
+        if (prop === "ta") {
+          address.name = value;
+        } else if (prop === "va") {
+          address.value = value;
+        }
+        dupAddresses.push(address)
+      }
+      setAddresses(dupAddresses)
+  }
+  const getAddressItem = (i) => {
     return (
       <Row key={i}>
         <Col>
