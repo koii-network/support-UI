@@ -73,7 +73,7 @@ const CreateDid = () => {
     "body{\n    color:white;\n  }\n  header{\n font-size:30px;\n}"
   );
   function handleLinkChange(id, value) {
-    console.log(id, value);
+    // console.log(id, value);
     let links = [...didState.links];
     let [prop, index] = id.split("-");
 
@@ -120,7 +120,7 @@ const CreateDid = () => {
 
   }
   const handleAddressChange = (id, value) => {
-    console.log(id, value);
+    // console.log(id, value);
     let dupAddresses = JSON.parse(JSON.stringify(addresses))
     let [prop, index] = id.split("-");
     let address = {}
@@ -285,11 +285,19 @@ const CreateDid = () => {
       [id]: value,
     });
   }
-  function submit(e) {
+  function onSubmit(e) {
     e.preventDefault();
     let state = JSON.parse(JSON.stringify(didState));
     state.css = code;
+    let newAddresses = {};
+    addresses.forEach(function(address) {
+      if(address.name !== "" && address.value !== "") {
+        newAddresses[`${address.name}`] = address.value
+      }
+    })
+    state.addresses = newAddresses;
     console.error(state);
+    return false
     // window.koiiWallet.createDID(didState).then((txId) => {
     // console.log(txId);
     // burnKOIIAndMigrateContent(txId)
@@ -311,7 +319,7 @@ const CreateDid = () => {
         ""
       )}
 
-      <Form onSubmit={submit}>
+      <Form onSubmit={onSubmit}>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Name</Form.Label>
           <Form.Control
