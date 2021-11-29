@@ -164,6 +164,9 @@ const CreateDid = () => {
       setLinkCount(linkCount + 1);
     } else handleShow("You can add upto 5 links");
   }
+  const addCustomAddress = () => {
+
+  }
   function addAddress() {
     // let links = [...didState.links];
     // links.push({
@@ -411,15 +414,22 @@ const CreateDid = () => {
           <Card.Body className="crypto-address-area">
             {generateAddressTable()}
 
-            <Button variant="success" onClick={addAddress}>
+            <Button className="mt-10" variant="success" onClick={addAddress}>
               +Add
             </Button>
             <Button
-              style={{ marginLeft: "5px" }}
+              className="mt-10 ml-5"
               variant="danger"
               onClick={removeAddress}
             >
               Remove
+            </Button>
+            <Button
+              className="mt-10 ml-5"
+              variant="success"
+              onClick={addCustomAddress}
+            >
+              Add Custom Address
             </Button>
           </Card.Body>
         </Card>
