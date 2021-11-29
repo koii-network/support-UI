@@ -224,8 +224,8 @@ const CreateDid = () => {
     currencies.forEach((cur, i) => {
       if (addresses.findIndex(k => k.name === cur) === -1)
         renderCurrencies.push({ value: cur, label: cur })
-      else 
-        renderCurrencies.push({ value: cur, label: cur, disabled: true })
+      // else 
+      //   renderCurrencies.push({ value: cur, label: cur, disabled: true })
     })
     console.log(renderCurrencies)
     return renderCurrencies;
