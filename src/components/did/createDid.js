@@ -12,6 +12,8 @@ import { UnControlled as CodeMirror } from "react-codemirror2";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
 import "codemirror/mode/css/css";
+import "./style.css";
+
 const Error = (props) => {
   return (
     <Modal show={props.show} onHide={props.handleClose}>
@@ -105,7 +107,7 @@ const CreateDid = () => {
     }
 
   }
-  function handleAddressChange(id, value) {
+  const handleAddressChange = (id, value) => {
     console.log(id, value);
     let dupAddresses = JSON.parse(JSON.stringify(addresses))
     let [prop, index] = id.split("-");
@@ -219,12 +221,11 @@ const CreateDid = () => {
   }
   const getUpdatedCurrencies = () => {
     const renderCurrencies = []
-    renderCurrencies.push(<option selected={false} disabled={true} key={-1}></option>)
     currencies.forEach((cur, i) => {
       if (addresses.findIndex(k => k.name === cur) === -1)
-        renderCurrencies.push(<option key={i}>{cur}</option>)
-      // else 
-      //   renderCurrencies.push(<option key={i} disabled={true}>{cur}</option>)
+        renderCurrencies.push({ value: cur, label: cur })
+      else 
+        renderCurrencies.push({ value: cur, label: cur, disabled: true })
     })
     console.log(renderCurrencies)
     return renderCurrencies;
@@ -238,7 +239,15 @@ const CreateDid = () => {
       <Row key={i}>
         <Col>
           <Form.Label>Currency</Form.Label>
-          <select
+          <Select
+            className="custom-select"
+            id={`ta-${i}`}
+            placeholder="select currency"
+            // value={selectedOption}
+            onChange={(sel) => handleAddressChange(`ta-${i}`, sel.value)}
+            options={getUpdatedCurrencies(i)}
+          />
+          {/* <select
             className="form-control"
             id={`ta-${i}`}
             onChange={(e) => {
@@ -246,7 +255,7 @@ const CreateDid = () => {
             }}
           >
             {getUpdatedCurrencies(i)}
-          </select>
+          </select> */}
         </Col>
         <Col>
           <Form.Group className="mb-3" controlId={`va-${i}`}>
