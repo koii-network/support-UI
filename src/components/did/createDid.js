@@ -29,6 +29,18 @@ const Error = (props) => {
     </Modal>
   );
 };
+const currencies = [
+  "Bitcoin",
+  "Ethereum",
+  "Binance Coin",
+  "Tether",
+  "Solana",
+  "Cardano",
+  "XRP",
+  "Polkadot",
+  "Avalanche",
+  "Shiba"
+]
 const CreateDid = () => {
   const [didState, setDidState] = useState({
     links: [
@@ -45,18 +57,18 @@ const CreateDid = () => {
   const [error, setError] = useState("");
   const [didId, setDidId] = useState(null);
   const [addresses, setAddresses] = useState([]);
-  const [currencies, setCurrencies] = useState([
-    "Bitcoin",
-    "Ethereum",
-    "Binance Coin",
-    "Tether",
-    "Solana",
-    "Cardano",
-    "XRP",
-    "Polkadot",
-    "Avalanche",
-    "Shiba",
-  ]);
+  // const [currencies, setCurrencies] = useState([
+  //   "Bitcoin",
+  //   "Ethereum",
+  //   "Binance Coin",
+  //   "Tether",
+  //   "Solana",
+  //   "Cardano",
+  //   "XRP",
+  //   "Polkadot",
+  //   "Avalanche",
+  //   "Shiba",
+  // ]);
   const [code, setCode] = useState(
     "body{\n    color:white;\n  }\n  header{\n font-size:30px;\n}"
   );
@@ -227,12 +239,7 @@ const CreateDid = () => {
       // else 
       //   renderCurrencies.push({ value: cur, label: cur, disabled: true })
     })
-    console.log(renderCurrencies)
     return renderCurrencies;
-    // return currencies.map((e) => (
-    //   if (addresses.findIndex(k => k.name === e) === -1)
-    //   return (<option>{e}</option>)
-    // ))
   }
   function getAddressItem(i) {
     return (
@@ -247,15 +254,6 @@ const CreateDid = () => {
             onChange={(sel) => handleAddressChange(`ta-${i}`, sel.value)}
             options={getUpdatedCurrencies(i)}
           />
-          {/* <select
-            className="form-control"
-            id={`ta-${i}`}
-            onChange={(e) => {
-              handleAddressChange(e.target.id, e.target.value);
-            }}
-          >
-            {getUpdatedCurrencies(i)}
-          </select> */}
         </Col>
         <Col>
           <Form.Group className="mb-3" controlId={`va-${i}`}>
@@ -402,7 +400,7 @@ const CreateDid = () => {
         </Card>
         <Card border="primary">
           <Card.Header>Other Crypto Addresses</Card.Header>
-          <Card.Body>
+          <Card.Body className="crypto-address-area">
             {generateAddressTable()}
 
             <Button variant="success" onClick={addAddress}>
