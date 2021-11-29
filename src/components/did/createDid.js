@@ -220,6 +220,17 @@ const CreateDid = () => {
     }
     return items;
   }
+  const getUpdatedCurrencies = () => {
+    const renderCurrencies = []
+    currencies.forEach((cur) => {
+      renderCurrencies.push(cur)
+    })
+    return renderCurrencies;
+    // return currencies.map((e) => (
+    //   if (addresses.findIndex(k => k.name === e) === -1)
+    //   return (<option>{e}</option>)
+    // ))
+  }
   function getAddressItem(i) {
     return (
       <Row key={i}>
@@ -232,10 +243,7 @@ const CreateDid = () => {
               handleAddressChange(e.target.id, e.target.value);
             }}
           >
-            {/* {getUpdatedCurrencies(i)} */}
-            {currencies.map((e) => (
-              <option>{e}</option>
-            ))}
+            {getUpdatedCurrencies(i)}
           </select>
         </Col>
         <Col>
