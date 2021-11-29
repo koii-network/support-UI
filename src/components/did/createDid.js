@@ -5,12 +5,9 @@ import {
   Card,
   Row,
   Col,
-  Modal,
-  Dropdown,
-  DropdownButton,
-  ButtonGroup,
-  FormLabel,
+  Modal
 } from "react-bootstrap";
+import Select from 'react-select';
 import { UnControlled as CodeMirror } from "react-codemirror2";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
@@ -49,7 +46,7 @@ const CreateDid = () => {
   const [currencies, setCurrencies] = useState([
     "Bitcoin",
     "Ethereum",
-    "BInance Coin",
+    "Binance Coin",
     "Tether",
     "Solana",
     "Cardano",
@@ -222,9 +219,14 @@ const CreateDid = () => {
   }
   const getUpdatedCurrencies = () => {
     const renderCurrencies = []
-    currencies.forEach((cur) => {
-      renderCurrencies.push(cur)
+    renderCurrencies.push(<option selected={false} disabled={true} key={-1}></option>)
+    currencies.forEach((cur, i) => {
+      if (addresses.findIndex(k => k.name === cur) === -1)
+        renderCurrencies.push(<option key={i}>{cur}</option>)
+      // else 
+      //   renderCurrencies.push(<option key={i} disabled={true}>{cur}</option>)
     })
+    console.log(renderCurrencies)
     return renderCurrencies;
     // return currencies.map((e) => (
     //   if (addresses.findIndex(k => k.name === e) === -1)
@@ -237,7 +239,7 @@ const CreateDid = () => {
         <Col>
           <Form.Label>Currency</Form.Label>
           <select
-            class="form-control"
+            className="form-control"
             id={`ta-${i}`}
             onChange={(e) => {
               handleAddressChange(e.target.id, e.target.value);
