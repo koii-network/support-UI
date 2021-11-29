@@ -20,14 +20,10 @@ const DID = () => {
               onSelect={(k) => setKey(k)}
               className="mb-3"
             >
-              <Tab eventKey="create" title="Create DID">
-            
-
-              </Tab>
-              <Tab eventKey="update" title="Update DID">
-              </Tab>
+              <Tab eventKey="create" title="Create DID" />
+              <Tab eventKey="update" title="Update DID" />
             </Tabs>
-              {key==="update"?(<UpdateDid></UpdateDid>):<CreateDid></CreateDid>}
+            {key==="update"?(<UpdateDid />):<CreateDid />}
           </div>
         </div>
       </div>

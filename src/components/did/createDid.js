@@ -164,9 +164,8 @@ const CreateDid = () => {
   }
   function removeAddress() {
     if (addressCount < 2) {
-      handleShow("You can must add a link");
+      handleShow("You can must add an address");
     } else {
-    
       setAddressCount(addressCount - 1);
     }
   }
@@ -233,6 +232,7 @@ const CreateDid = () => {
               handleAddressChange(e.target.id, e.target.value);
             }}
           >
+            {/* {getUpdatedCurrencies(i)} */}
             {currencies.map((e) => (
               <option>{e}</option>
             ))}
