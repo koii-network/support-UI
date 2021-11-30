@@ -56,7 +56,7 @@ const CreateDid = () => {
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
   const [didId, setDidId] = useState(null);
-  const [addresses, setAddresses] = useState([{name: '', value: ''}]);
+  const [addresses, setAddresses] = useState([{name: '', value: '', type: 'general'}]);
   const [code, setCode] = useState(
     "body{\n    color:white;\n  }\n  header{\n font-size:30px;\n}"
   );
@@ -175,18 +175,28 @@ const CreateDid = () => {
     adds.push({
       name: '',
       value: '',
+      type: 'general'
     })
     setAddresses(adds)
     // setAddressCount(addressCount + 1);
   }
-  function removeAddress() {
+
+  const addCustomAddress = () => {
+    let adds = [...addresses];
+    adds.push({
+      name: '',
+      value: '',
+      type: 'custom'
+    })
+    setAddresses(adds)
+  }
+  const removeAddress = () => {
     if (addresses.length < 2) {
       handleShow("You can must add an address");
     } else {
-      let adds = [...addresses];
+      let adds = [...addresses]
       adds.pop()
       setAddresses(adds)
-      // setAddressCount(addressCount - 1);
     }
     // if (addressCount < 2) {
     //   handleShow("You can must add an address");
@@ -195,9 +205,6 @@ const CreateDid = () => {
     // }
   }
 
-  const addCustomAddress = () => {
-
-  }
   const getUpdatedCurrencies = () => {
     const renderCurrencies = []
     currencies.forEach((cur, i) => {
@@ -210,7 +217,8 @@ const CreateDid = () => {
   }
   const handleAddressChange = (id, value) => {
     // console.log(id, value);
-    let dupAddresses = JSON.parse(JSON.stringify(addresses))
+    let dupAddresses = [...addresses]
+    // let dupAddresses = JSON.parse(JSON.stringify(addresses))
     let [prop, index] = id.split("-");
     let address = {}
 
@@ -220,6 +228,8 @@ const CreateDid = () => {
           address.name = value;
         } else if (prop === "va") {
           address.value = value;
+        } else if (prop === "ca") {
+          address.name = value;
         }
       } else {
         address = {};
@@ -227,6 +237,8 @@ const CreateDid = () => {
           address.name = value;
         } else if (prop === "va") {
           address.value = value;
+        } else if (prop === "ca") {
+          address.name = value;
         }
         dupAddresses.push(address)
       }
@@ -263,10 +275,47 @@ const CreateDid = () => {
       </Row>
     );
   }
+  const getCustomAddressItem = (i) => {
+    return (
+      <Row key={i}>
+        <Col>
+          <Form.Group className="mb-3" controlId={`ca-${i}`}>
+            <Form.Label>Custom Currency</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              placeholder="custom currency"
+              value={addresses[i].name}
+              onChange={(e) => {
+                handleAddressChange(e.target.id, e.target.value);
+              }}
+            />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group className="mb-3" controlId={`va-${i}`}>
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              placeholder="0x000000000000000"
+              value={linkState?.i?.value}
+              onChange={(e) => {
+                handleAddressChange(e.target.id, e.target.value);
+              }}
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+    );
+  }
   function generateAddressTable() {
     const items = [];
-    for (let i = 0; i < addressCount; i++) {
-      items.push(getAddressItem(i));
+    for (let i = 0; i < addresses.length; i++) {
+      if(addresses[i].type === 'general')
+        items.push(getAddressItem(i))
+      else
+        items.push(getCustomAddressItem(i))
     }
     return items;
   }
@@ -283,7 +332,7 @@ const CreateDid = () => {
     let newAddresses = {};
     addresses.forEach(function(address) {
       if(address.name !== "" && address.value !== "") {
-        newAddresses[`${address.name}`] = address.value
+        newAddresses[`${address.name.toLowerCase()}`] = address.value
       }
     })
     state.addresses = newAddresses;
