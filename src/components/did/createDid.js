@@ -59,6 +59,7 @@ const CreateDid = () => {
   const [code, setCode] = useState(
     "body{\n    color:white;\n  }\n  header{\n font-size:30px;\n}"
   );
+  
   function handleLinkChange(id, value) {
     // console.log(id, value);
     let links = [...didState.links];

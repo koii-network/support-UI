@@ -55,7 +55,7 @@ const UpdateDid = () => {
     "body{\n    color:white;\n  }\n  header{\n font-size:30px;\n}"
   );
 
-  
+
   function handleLinkChange(id, value) {
     let links = [...didState.links];
     let [prop, index] = id.split("-");
@@ -77,22 +77,6 @@ const UpdateDid = () => {
       links.push(link);
     }
     setDidState({ ...didState, links });
-
-    // setLinkState(
-    //   {
-    //     ...linkState,
-    //     [id]: value,
-    //   },
-    //   () => {
-    //     let links = [...didState.links];
-    //     links[id] = value;
-    //     setDidState([links])
-    //   }
-    // );
-
-    // setLinkState({
-    //     didState.links[2].title:2
-    // })
   }
 
   const handleClose = () => {
@@ -134,7 +118,7 @@ const UpdateDid = () => {
               required
               type="text"
               placeholder="LinkedIn, Instagram, Twitter ....."
-              value={didState.links[i]["title"]}
+              value={linkState?.i?.title}
               onChange={(e) => {
                 handleLinkChange(e.target.id, e.target.value);
               }}
@@ -148,7 +132,7 @@ const UpdateDid = () => {
               type="text"
               required
               placeholder="e.g https://linked.com/Arnald"
-              value={didState.links[i]["link"]}
+              value={linkState?.i?.value}
               onChange={(e) => {
                 handleLinkChange(e.target.id, e.target.value);
               }}
