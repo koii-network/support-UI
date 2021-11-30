@@ -52,7 +52,6 @@ const CreateDid = () => {
   });
   const [linkState, setLinkState] = useState({});
   const [linkCount, setLinkCount] = useState(1);
-  const [addressCount, setAddressCount] = useState(1);
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
   const [didId, setDidId] = useState(null);

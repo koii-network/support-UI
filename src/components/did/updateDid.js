@@ -23,14 +23,39 @@ const Error = (props) => {
     </Modal>
   );
 };
+const currencies = [
+  "Bitcoin",
+  "Ethereum",
+  "Binance Coin",
+  "Tether",
+  "Solana",
+  "Cardano",
+  "XRP",
+  "Polkadot",
+  "Avalanche",
+  "Shiba"
+]
 const UpdateDid = () => {
-  const [didState, setDidState] = useState(null);
+  const [didState, setDidState] = useState({
+    links: [
+      {
+        title: "",
+        link: "",
+      },
+    ],
+  });
   const [linkState, setLinkState] = useState({});
   const [linkCount, setLinkCount] = useState(1);
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
   const [didId, setDidId] = useState(null);
+  const [addresses, setAddresses] = useState([{name: '', value: '', type: 'general'}]);
   const [updated, setUpdated] = useState(false);
+  const [code, setCode] = useState(
+    "body{\n    color:white;\n  }\n  header{\n font-size:30px;\n}"
+  );
+
+  
   function handleLinkChange(id, value) {
     let links = [...didState.links];
     let [prop, index] = id.split("-");
