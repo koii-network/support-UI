@@ -5,6 +5,8 @@ import { UnControlled as CodeMirror } from "react-codemirror2";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
 import "codemirror/mode/css/css";
+// import Arweave from "arweave";
+// const { readContract } = require("smartweave");
 import { getDIdState, updateDID, burnKOIIAndMigrateContent } from "@_koi/did";
 import "./style.css";
 
@@ -333,6 +335,26 @@ const UpdateDid = () => {
 
       }
     });
+    // arweave.transactions.get(didId).then((transaction) => {
+    //   for (const tag of transaction.get("tags")) {
+    //     let key = tag.get("name", { decode: true, string: true });
+    //     let value = tag.get("value", { decode: true, string: true });
+    //     console.log(key)
+    //     if (key === "Contract-Id") {
+    //       readContract(arweave, value)
+    //         .then((res) => {
+    //           console.log("DID state", res)
+    //           setDidState(res);
+    //           window.didLoaded = true;
+    //         })
+    //         .catch(() => {
+    //           setTransactionState({
+    //             confirmed: false,
+    //           });
+    //         });
+    //     }
+    //   }
+    // });
   }
   return (
     <div>
@@ -358,7 +380,7 @@ const UpdateDid = () => {
         />
       </Form.Group>
       <Button onClick={getDidStateHandler} variant="primary" type="buuton">
-        Submit
+        Get
       </Button>
       {didState ? (
         <Form onSubmit={onSubmit}>
