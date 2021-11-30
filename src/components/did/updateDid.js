@@ -149,18 +149,178 @@ const UpdateDid = () => {
     }
     return items;
   }
+  function addAddress() {
+    let adds = [...addresses];
+    adds.push({
+      name: '',
+      value: '',
+      type: 'general'
+    })
+    setAddresses(adds)
+    // setAddressCount(addressCount + 1);
+  }
+
+  const addCustomAddress = () => {
+    let adds = [...addresses];
+    adds.push({
+      name: '',
+      value: '',
+      type: 'custom'
+    })
+    setAddresses(adds)
+  }
+  const removeAddress = () => {
+    if (addresses.length < 2) {
+      handleShow("You can must add an address");
+    } else {
+      let adds = [...addresses]
+      adds.pop()
+      setAddresses(adds)
+    }
+    // if (addressCount < 2) {
+    //   handleShow("You can must add an address");
+    // } else {
+    //   setAddressCount(addressCount - 1);
+    // }
+  }
+
+  const getUpdatedCurrencies = () => {
+    const renderCurrencies = []
+    currencies.forEach((cur, i) => {
+      if (addresses.findIndex(k => k.name === cur) === -1)
+        renderCurrencies.push({ value: cur, label: cur })
+      // else 
+      //   renderCurrencies.push({ value: cur, label: cur, disabled: true })
+    })
+    return renderCurrencies;
+  }
+  const handleAddressChange = (id, value) => {
+    // console.log(id, value);
+    let dupAddresses = [...addresses]
+    // let dupAddresses = JSON.parse(JSON.stringify(addresses))
+    let [prop, index] = id.split("-");
+    let address = {}
+
+      if (addresses[index]) {
+         address = dupAddresses[index];
+        if (prop === "ta") {
+          address.name = value;
+        } else if (prop === "va") {
+          address.value = value;
+        } else if (prop === "ca") {
+          address.name = value;
+        }
+      } else {
+        address = {};
+        if (prop === "ta") {
+          address.name = value;
+        } else if (prop === "va") {
+          address.value = value;
+        } else if (prop === "ca") {
+          address.name = value;
+        }
+        dupAddresses.push(address)
+      }
+      setAddresses(dupAddresses)
+  }
+  const getAddressItem = (i) => {
+    return (
+      <Row key={i}>
+        <Col>
+          <Form.Label>Currency</Form.Label>
+          <Select
+            className="custom-select"
+            id={`ta-${i}`}
+            placeholder="select currency"
+            // value={selectedOption}
+            onChange={(sel) => handleAddressChange(`ta-${i}`, sel.value)}
+            options={getUpdatedCurrencies(i)}
+          />
+        </Col>
+        <Col>
+          <Form.Group className="mb-3" controlId={`va-${i}`}>
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              placeholder="0x000000000000000"
+              value={linkState?.i?.value}
+              onChange={(e) => {
+                handleAddressChange(e.target.id, e.target.value);
+              }}
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+    );
+  }
+  const getCustomAddressItem = (i) => {
+    return (
+      <Row key={i}>
+        <Col>
+          <Form.Group className="mb-3" controlId={`ca-${i}`}>
+            <Form.Label>Custom Currency</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              placeholder="custom currency"
+              value={addresses[i].name}
+              onChange={(e) => {
+                handleAddressChange(e.target.id, e.target.value);
+              }}
+            />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group className="mb-3" controlId={`va-${i}`}>
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              placeholder="0x000000000000000"
+              value={linkState?.i?.value}
+              onChange={(e) => {
+                handleAddressChange(e.target.id, e.target.value);
+              }}
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+    );
+  }
+  function generateAddressTable() {
+    const items = [];
+    for (let i = 0; i < addresses.length; i++) {
+      if(addresses[i].type === 'general')
+        items.push(getAddressItem(i))
+      else
+        items.push(getCustomAddressItem(i))
+    }
+    return items;
+  }
   function inputHandler(id, value) {
     setDidState({
       ...didState,
       [id]: value,
     });
   }
-  function submit(e) {
+  function onSubmit(e) {
     e.preventDefault();
-    window.koiiWallet.updateDID(didState,didId).then((res)=>{
-      console.log(res)
-      setUpdated(true)
-    });
+    let state = JSON.parse(JSON.stringify(didState));
+    state.css = code;
+    let newAddresses = {};
+    addresses.forEach(function(address) {
+      if(address.name !== "" && address.value !== "") {
+        newAddresses[`${address.name.toLowerCase()}`] = address.value
+      }
+    })
+    state.addresses = newAddresses;
+    console.error(state);
+    return false
+    // window.koiiWallet.updateDID(didState,didId).then((res)=>{
+    //   console.log(res)
+    //   setUpdated(true)
+    // });
   }
   function getDidStateHandler() {
     getDIdState(didId).then((res) => {
@@ -201,7 +361,7 @@ const UpdateDid = () => {
         Submit
       </Button>
       {didState ? (
-        <Form onSubmit={submit}>
+        <Form onSubmit={onSubmit}>
           <Form.Group className="mb-3" controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
@@ -291,6 +451,30 @@ const UpdateDid = () => {
               </Button>
             </Card.Body>
           </Card>
+          <Card border="primary">
+          <Card.Header>Other Crypto Addresses</Card.Header>
+          <Card.Body className="crypto-address-area">
+            {generateAddressTable()}
+
+            <Button className="mt-10" variant="success" onClick={addAddress}>
+              +Add
+            </Button>
+            <Button
+              className="mt-10 ml-5"
+              variant="danger"
+              onClick={removeAddress}
+            >
+              Remove
+            </Button>
+            <Button
+              className="mt-10 ml-5"
+              variant="success"
+              onClick={addCustomAddress}
+            >
+              Add Custom Address
+            </Button>
+          </Card.Body>
+        </Card>
           <Form.Group
             className="mb-3"
             controlId="formBasicCheckbox"
