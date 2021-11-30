@@ -56,7 +56,7 @@ const CreateDid = () => {
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
   const [didId, setDidId] = useState(null);
-  const [addresses, setAddresses] = useState([]);
+  const [addresses, setAddresses] = useState([{name: '', value: ''}]);
   const [code, setCode] = useState(
     "body{\n    color:white;\n  }\n  header{\n font-size:30px;\n}"
   );
@@ -171,20 +171,28 @@ const CreateDid = () => {
     return items;
   }
   function addAddress() {
-    // let links = [...didState.links];
-    // links.push({
-    //   title: "",
-    //   link: "",
-    // });
-    // setDidState({ ...didState, links });
-    setAddressCount(addressCount + 1);
+    let adds = [...addresses];
+    adds.push({
+      name: '',
+      value: '',
+    })
+    setAddresses(adds)
+    // setAddressCount(addressCount + 1);
   }
   function removeAddress() {
-    if (addressCount < 2) {
+    if (addresses.length < 2) {
       handleShow("You can must add an address");
     } else {
-      setAddressCount(addressCount - 1);
+      let adds = [...addresses];
+      adds.pop()
+      setAddresses(adds)
+      // setAddressCount(addressCount - 1);
     }
+    // if (addressCount < 2) {
+    //   handleShow("You can must add an address");
+    // } else {
+    //   setAddressCount(addressCount - 1);
+    // }
   }
 
   const addCustomAddress = () => {
