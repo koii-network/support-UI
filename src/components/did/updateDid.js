@@ -35,7 +35,8 @@ const currencies = [
   "XRP",
   "Polkadot",
   "Avalanche",
-  "Shiba"
+  "Shiba",
+  "Polygon",
 ]
 const UpdateDid = () => {
   const [didState, setDidState] = useState({
@@ -46,7 +47,6 @@ const UpdateDid = () => {
       },
     ],
   });
-  const [linkState, setLinkState] = useState({});
   const [linkCount, setLinkCount] = useState(1);
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
@@ -120,7 +120,7 @@ const UpdateDid = () => {
               required
               type="text"
               placeholder="LinkedIn, Instagram, Twitter ....."
-              value={linkState?.i?.title}
+              defaultValue={''}
               onChange={(e) => {
                 handleLinkChange(e.target.id, e.target.value);
               }}
@@ -134,7 +134,7 @@ const UpdateDid = () => {
               type="text"
               required
               placeholder="e.g https://linked.com/Arnald"
-              value={linkState?.i?.value}
+              defaultValue={''}
               onChange={(e) => {
                 handleLinkChange(e.target.id, e.target.value);
               }}
@@ -369,12 +369,13 @@ const UpdateDid = () => {
     
     for (let [key, value] of Object.entries(data.addresses)) {
       console.log(key, value);
-      if(currencies.includes(key)) 
+      if(currencies.findIndex( c => c.toLowerCase() === key.toLowerCase()) > -1) 
         resAdds.push({name: key, value, type: 'general'})
       else
         resAdds.push({name: key, value, type: 'custom'})
     }
     if(resAdds.length === 0) resAdds.push({name: '', value: '', type: 'general'})
+    setCode(data.css)
     setAddresses(resAdds)
     setDidLoaded(true)
     // getDIdState(didId).then((res) => {
