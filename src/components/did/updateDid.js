@@ -534,7 +534,17 @@ const UpdateDid = () => {
             className="mb-3"
             controlId="formBasicCheckbox"
           ></Form.Group>
-          <Button variant="primary" type="submit">
+          <CodeMirror
+            value={code}
+            options={{
+              theme: "material",
+              lineNumbers: true,
+            }}
+            onChange={(editor, data, value) => {
+              setCode(value);
+            }}
+          />
+          <Button variant="primary" type="submit" className="mt-10">
             Update
           </Button>
         </Form>
