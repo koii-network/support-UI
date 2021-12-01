@@ -120,7 +120,7 @@ const UpdateDid = () => {
               required
               type="text"
               placeholder="LinkedIn, Instagram, Twitter ....."
-              defaultValue={''}
+              defaultValue={didState.links[i].title}
               onChange={(e) => {
                 handleLinkChange(e.target.id, e.target.value);
               }}
@@ -134,7 +134,7 @@ const UpdateDid = () => {
               type="text"
               required
               placeholder="e.g https://linked.com/Arnald"
-              defaultValue={''}
+              defaultValue={didState.links[i].link}
               onChange={(e) => {
                 handleLinkChange(e.target.id, e.target.value);
               }}
