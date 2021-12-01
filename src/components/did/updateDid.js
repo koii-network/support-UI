@@ -366,7 +366,15 @@ const UpdateDid = () => {
     setDidState(data);
     setLinkCount(data.links.length);
     const resAdds = []
-    resAdds.push({name: '', value: '', type: 'general'})
+    
+    for (let [key, value] of Object.entries(data.addresses)) {
+      console.log(key, value);
+      if(currencies.includes(key)) 
+        resAdds.push({name: key, value, type: 'general'})
+      else
+        resAdds.push({name: key, value, type: 'custom'})
+    }
+    if(resAdds.length === 0) resAdds.push({name: '', value: '', type: 'general'})
     setAddresses(resAdds)
     setDidLoaded(true)
     // getDIdState(didId).then((res) => {

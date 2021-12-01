@@ -50,7 +50,6 @@ const CreateDid = () => {
       },
     ],
   });
-  const [linkState, setLinkState] = useState({});
   const [linkCount, setLinkCount] = useState(1);
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
@@ -123,7 +122,6 @@ const CreateDid = () => {
               required
               type="text"
               placeholder="LinkedIn, Instagram, Twitter ....."
-              value={linkState?.i?.title}
               onChange={(e) => {
                 handleLinkChange(e.target.id, e.target.value);
               }}
@@ -137,7 +135,6 @@ const CreateDid = () => {
               type="text"
               required
               placeholder="e.g https://linked.com/Arnald"
-              value={linkState?.i?.value}
               onChange={(e) => {
                 handleLinkChange(e.target.id, e.target.value);
               }}
@@ -282,7 +279,6 @@ const CreateDid = () => {
               type="text"
               required
               placeholder="0x000000000000000"
-              value={linkState?.i?.value}
               onChange={(e) => {
                 handleAddressChange(e.target.id, e.target.value);
               }}
