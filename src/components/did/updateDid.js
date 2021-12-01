@@ -56,7 +56,6 @@ const UpdateDid = () => {
     "body{\n    color:white;\n  }\n  header{\n font-size:30px;\n}"
   );
 
-
   function handleLinkChange(id, value) {
     let links = [...didState.links];
     let [prop, index] = id.split("-");
@@ -325,69 +324,68 @@ const UpdateDid = () => {
   }
   function getDidStateHandler() {
     console.log('transaction', didId)
-    const data = {
-      "links": [
-        {
-          "title": "Twitter",
-          "link": "https://twitter.com/"
-        },
-        {
-          "title": "LinkedIn ",
-          "link": "https://www.linkedin.com/in/"
-        },
-        {
-          "title": "Github",
-          "link": "https://github.com/"
-        }
-      ],
-      "addresses": {
-        "solona": "5m6DdgC4yQY9EdzEocdHwCywpw78HYcsXuYPzwHytvg2",
-        "ether": "0x0C840f508e3eC928f59Ff83440dbA3fFcd0e615F",
-        "polygon": "0x75b352626e0E16c36605fE388190a57a88181657"
-      },
-      "name": "tempcd",
-      "description": "This is my profile page!",
-      "picture": "ErowSOjPjG5-wdvjVOGQSNlHVT-AE5f-Bzlmh2NxqFk",
-      "banner": "-GQ4iE_f2OhwB2ws_NT9_oxfjycDK0X0r3yAQSaxWJk",
-      "styles": {
-        "links": {
-          "color": "black"
-        },
-        "name": {
-          "fontSize": "20px"
-        },
-        "description": {
-          "color": "green"
-        }
-      },
-      "css": ".links {\n  color: black;\n}\n\n.name {\n  font-size: 20px;\n}\n\n.description {\n  color: green;\n}\n\n"
-    }
-    console.log('res data', data)
-    setDidState(data);
-    setLinkCount(data.links.length);
-    const resAdds = []
+    // const data = {
+    //   "links": [
+    //     {
+    //       "title": "Twitter",
+    //       "link": "https://twitter.com/"
+    //     },
+    //     {
+    //       "title": "LinkedIn ",
+    //       "link": "https://www.linkedin.com/in/"
+    //     },
+    //     {
+    //       "title": "Github",
+    //       "link": "https://github.com/"
+    //     }
+    //   ],
+    //   "addresses": {
+    //     "solona": "5m6DdgC4yQY9EdzEocdHwCywpw78HYcsXuYPzwHytvg2",
+    //     "ether": "0x0C840f508e3eC928f59Ff83440dbA3fFcd0e615F",
+    //     "polygon": "0x75b352626e0E16c36605fE388190a57a88181657"
+    //   },
+    //   "name": "tempcd",
+    //   "description": "This is my profile page!",
+    //   "picture": "ErowSOjPjG5-wdvjVOGQSNlHVT-AE5f-Bzlmh2NxqFk",
+    //   "banner": "-GQ4iE_f2OhwB2ws_NT9_oxfjycDK0X0r3yAQSaxWJk",
+    //   "styles": {
+    //     "links": {
+    //       "color": "black"
+    //     },
+    //     "name": {
+    //       "fontSize": "20px"
+    //     },
+    //     "description": {
+    //       "color": "green"
+    //     }
+    //   },
+    //   "css": ".links {\n  color: black;\n}\n\n.name {\n  font-size: 20px;\n}\n\n.description {\n  color: green;\n}\n\n"
+    // }
     
-    for (let [key, value] of Object.entries(data.addresses)) {
-      console.log(key, value);
-      if(currencies.findIndex( c => c.toLowerCase() === key.toLowerCase()) > -1) 
-        resAdds.push({name: key, value, type: 'general'})
-      else
-        resAdds.push({name: key, value, type: 'custom'})
-    }
-    if(resAdds.length === 0) resAdds.push({name: '', value: '', type: 'general'})
-    setCode(data.css)
-    setAddresses(resAdds)
-    setDidLoaded(true)
-    // getDIdState(didId).then((res) => {
-    //   console.log(res);
-    //   if (res.status !== 200) {
-    //     handleShow(res.message);
-    //   } else {
-    //     setDidState(res.data.data);
-    //     setLinkCount(res.data.data.links.length);
-
-    //   }
-    // });
+    getDIdState(didId).then((res) => {
+      console.log(res);
+      if (res.status !== 200) {
+        handleShow(res.message);
+      } else {
+        const data = res.data.data
+        console.log('res data', data)
+        setDidState(data);
+        setLinkCount(data.links.length);
+        const resAdds = []
+        
+        for (let [key, value] of Object.entries(data.addresses)) {
+          console.log(key, value);
+          if(currencies.findIndex( c => c.toLowerCase() === key.toLowerCase()) > -1) 
+            resAdds.push({name: key, value, type: 'general'})
+          else
+            resAdds.push({name: key, value, type: 'custom'})
+        }
+        if(resAdds.length === 0) resAdds.push({name: '', value: '', type: 'general'})
+        setCode(data.css)
+        setAddresses(resAdds)
+        setDidLoaded(true)
+      }
+    });
   }
   return (
     <div>
