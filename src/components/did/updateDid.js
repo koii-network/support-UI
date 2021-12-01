@@ -35,8 +35,7 @@ const currencies = [
   "XRP",
   "Polkadot",
   "Avalanche",
-  "Shiba",
-  "Polygon",
+  "Shiba"
 ]
 const UpdateDid = () => {
   const [didState, setDidState] = useState({
@@ -234,7 +233,7 @@ const UpdateDid = () => {
             className="custom-select"
             id={`ta-${i}`}
             placeholder="select currency"
-            // value={selectedOption}
+            value={{ value: addresses[i].name, label: addresses[i].name }}
             onChange={(sel) => handleAddressChange(`ta-${i}`, sel.value)}
             options={getUpdatedCurrencies(i)}
           />
@@ -246,6 +245,7 @@ const UpdateDid = () => {
               type="text"
               required
               placeholder="0x000000000000000"
+              defaultValue={addresses[i].value}
               onChange={(e) => {
                 handleAddressChange(e.target.id, e.target.value);
               }}
