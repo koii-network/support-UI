@@ -83,22 +83,6 @@ const CreateDid = () => {
     }
 
     setDidState({ ...didState, links });
-
-    // setLinkState(
-    //   {
-    //     ...linkState,
-    //     [id]: value,
-    //   },
-    //   () => {
-    //     let links = [...didState.links];
-    //     links[id] = value;
-    //     setDidState([links])
-    //   }
-    // );
-
-    // setLinkState({
-    //     didState.links[2].title:2
-    // })
   }
   const handleClose = () => {
     setShow(false);
@@ -265,7 +249,6 @@ const CreateDid = () => {
               type="text"
               required
               placeholder="0x000000000000000"
-              value={linkState?.i?.value}
               onChange={(e) => {
                 handleAddressChange(e.target.id, e.target.value);
               }}

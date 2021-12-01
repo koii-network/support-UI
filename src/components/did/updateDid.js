@@ -52,7 +52,7 @@ const UpdateDid = () => {
   const [error, setError] = useState("");
   const [didId, setDidId] = useState(null);
   const [addresses, setAddresses] = useState([{name: '', value: '', type: 'general'}]);
-  const [updated, setUpdated] = useState(false);
+  const [didLoaded, setDidLoaded] = useState(false);
   const [code, setCode] = useState(
     "body{\n    color:white;\n  }\n  header{\n font-size:30px;\n}"
   );
@@ -246,7 +246,6 @@ const UpdateDid = () => {
               type="text"
               required
               placeholder="0x000000000000000"
-              value={linkState?.i?.value}
               onChange={(e) => {
                 handleAddressChange(e.target.id, e.target.value);
               }}
@@ -280,7 +279,7 @@ const UpdateDid = () => {
               type="text"
               required
               placeholder="0x000000000000000"
-              value={linkState?.i?.value}
+              value={addresses[i].value}
               onChange={(e) => {
                 handleAddressChange(e.target.id, e.target.value);
               }}
@@ -363,11 +362,13 @@ const UpdateDid = () => {
       },
       "css": ".links {\n  color: black;\n}\n\n.name {\n  font-size: 20px;\n}\n\n.description {\n  color: green;\n}\n\n"
     }
+    console.log('res data', data)
     setDidState(data);
     setLinkCount(data.links.length);
     const resAdds = []
     resAdds.push({name: '', value: '', type: 'general'})
     setAddresses(resAdds)
+    setDidLoaded(true)
     // getDIdState(didId).then((res) => {
     //   console.log(res);
     //   if (res.status !== 200) {
@@ -382,30 +383,30 @@ const UpdateDid = () => {
   return (
     <div>
       <h3>Update DID</h3>
-      {updated?(<h4>DID Update Initialized</h4>):""}
-      {error ? (
+      {/* {didLoaded ? (<h4>DID Update Initialized</h4>) :""} */}
+      {error && (
         <Error
           show={show}
           message={error}
           handleClose={handleClose}
           handleShow={handleShow}
         ></Error>
-      ) : (
-        ""
       )}
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Enter you DID Id</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="DID Id"
-          value={didId}
-          onChange={(e) => setDidId(e.target.value)}
-        />
-      </Form.Group>
-      <Button onClick={getDidStateHandler} variant="primary" type="buuton">
-        Get
-      </Button>
-      {didState ? (
+      { !didLoaded && <div className="did-address-area">
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Enter you DID Id</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="DID Id"
+            value={didId}
+            onChange={(e) => setDidId(e.target.value)}
+          />
+        </Form.Group>
+        <Button onClick={getDidStateHandler} variant="primary" type="buuton">
+          Get
+        </Button>
+      </div>}
+      {didLoaded && (
         <Form onSubmit={onSubmit}>
           <Form.Group className="mb-3" controlId="name">
             <Form.Label>Name</Form.Label>
@@ -528,11 +529,7 @@ const UpdateDid = () => {
             Update
           </Button>
         </Form>
-      ) : (
-        ""
       )}
-
-      <></>
     </div>
   );
 };
