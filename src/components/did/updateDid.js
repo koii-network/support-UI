@@ -325,34 +325,57 @@ const UpdateDid = () => {
     // });
   }
   function getDidStateHandler() {
-    getDIdState(didId).then((res) => {
-      console.log(res);
-      if (res.status !== 200) {
-        handleShow(res.message);
-      } else {
-        setDidState(res.data.data);
-        setLinkCount(res.data.data.links.length);
+    console.log('transaction', didId)
+    const data = {
+      "links": [
+        {
+          "title": "Twitter",
+          "link": "https://twitter.com/"
+        },
+        {
+          "title": "LinkedIn ",
+          "link": "https://www.linkedin.com/in/"
+        },
+        {
+          "title": "Github",
+          "link": "https://github.com/"
+        }
+      ],
+      "addresses": {
+        "solona": "5m6DdgC4yQY9EdzEocdHwCywpw78HYcsXuYPzwHytvg2",
+        "ether": "0x0C840f508e3eC928f59Ff83440dbA3fFcd0e615F",
+        "polygon": "0x75b352626e0E16c36605fE388190a57a88181657"
+      },
+      "name": "tempcd",
+      "description": "This is my profile page!",
+      "picture": "ErowSOjPjG5-wdvjVOGQSNlHVT-AE5f-Bzlmh2NxqFk",
+      "banner": "-GQ4iE_f2OhwB2ws_NT9_oxfjycDK0X0r3yAQSaxWJk",
+      "styles": {
+        "links": {
+          "color": "black"
+        },
+        "name": {
+          "fontSize": "20px"
+        },
+        "description": {
+          "color": "green"
+        }
+      },
+      "css": ".links {\n  color: black;\n}\n\n.name {\n  font-size: 20px;\n}\n\n.description {\n  color: green;\n}\n\n"
+    }
+    setDidState(data);
+    setLinkCount(data.links.length);
+    const resAdds = []
+    resAdds.push({name: '', value: '', type: 'general'})
+    setAddresses(resAdds)
+    // getDIdState(didId).then((res) => {
+    //   console.log(res);
+    //   if (res.status !== 200) {
+    //     handleShow(res.message);
+    //   } else {
+    //     setDidState(res.data.data);
+    //     setLinkCount(res.data.data.links.length);
 
-      }
-    });
-    // arweave.transactions.get(didId).then((transaction) => {
-    //   for (const tag of transaction.get("tags")) {
-    //     let key = tag.get("name", { decode: true, string: true });
-    //     let value = tag.get("value", { decode: true, string: true });
-    //     console.log(key)
-    //     if (key === "Contract-Id") {
-    //       readContract(arweave, value)
-    //         .then((res) => {
-    //           console.log("DID state", res)
-    //           setDidState(res);
-    //           window.didLoaded = true;
-    //         })
-    //         .catch(() => {
-    //           setTransactionState({
-    //             confirmed: false,
-    //           });
-    //         });
-    //     }
     //   }
     // });
   }
