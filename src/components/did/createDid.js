@@ -296,13 +296,20 @@ const CreateDid = () => {
       [id]: value,
     });
   }
+  const inputValidation = () => {
+    return true
+  }
   function onSubmit(e) {
     e.preventDefault();
     if(!(window.koiiWallet && window.koiiWallet.createDID )){
       handleShow("Install Finne wallet or update it to latest version")
       return
     }
-    let state = JSON.parse(JSON.stringify(didState));
+    let state = {...didState}
+    if(!inputValidation(state.picture)) {
+      handleShow("Please input valid arweave image url")
+      return
+    }
     try {
       state.style = parseCss(code);
     } catch (e) {

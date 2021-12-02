@@ -162,14 +162,14 @@ const UpdateDid = () => {
   }
 
   const addCustomAddress = () => {
-    let adds = [...addresses];
+    let adds = [...addresses]
     adds.push({
       name: "",
       value: "",
       type: "custom",
-    });
-    setAddresses(adds);
-  };
+    })
+    setAddresses(adds)
+  }
   const removeAddress = () => {
     if (addresses.length < 2) {
       handleShow("You can must add an address");
