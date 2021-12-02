@@ -229,14 +229,23 @@ const UpdateDid = () => {
       <Row key={i}>
         <Col>
           <Form.Label>Currency</Form.Label>
-          <Select
-            className="custom-select"
-            id={`ta-${i}`}
-            placeholder="select currency"
-            value={{ value: addresses[i].name, label: addresses[i].name }}
-            onChange={(sel) => handleAddressChange(`ta-${i}`, sel.value)}
-            options={getUpdatedCurrencies(i)}
-          />
+          {addresses[i].name !== '' &&
+            <Select
+              className="custom-select"
+              id={`ta-${i}`}
+              placeholder="select currency"
+              defaultValue={{ value: addresses[i].name, label: addresses[i].name }}
+              onChange={(sel) => handleAddressChange(`ta-${i}`, sel.value)}
+              options={getUpdatedCurrencies(i)}
+            />}
+          {addresses[i].name === '' &&
+            <Select
+              className="custom-select"
+              id={`ta-${i}`}
+              placeholder="select currency"
+              onChange={(sel) => handleAddressChange(`ta-${i}`, sel.value)}
+              options={getUpdatedCurrencies(i)}
+            />}
         </Col>
         <Col>
           <Form.Group className="mb-3" controlId={`va-${i}`}>
@@ -395,10 +404,7 @@ const UpdateDid = () => {
         if(data.addresses) {
           for (let [key, value] of Object.entries(data.addresses)) {
             console.log(key, value);
-            if (
-              currencies.findIndex((c) => c.toLowerCase() === key.toLowerCase()) >
-              -1
-            )
+            if (currencies.findIndex((c) => c.toLowerCase() === key.toLowerCase()) > -1)
               resAdds.push({ name: key, value, type: "general" });
             else resAdds.push({ name: key, value, type: "custom" });
           }
