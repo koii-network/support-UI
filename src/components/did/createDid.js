@@ -1,20 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  Form,
-  Button,
-  Card,
-  Row,
-  Col,
-  Modal,
-  Dropdown,
-  DropdownButton,
-  ButtonGroup,
-  FormLabel,
-} from "react-bootstrap";
+import { Form, Button, Card, Row, Col, Modal } from "react-bootstrap";
+import Select from "react-select";
 import { UnControlled as CodeMirror } from "react-codemirror2";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
 import "codemirror/mode/css/css";
+import "./style.css";
+import parseCss from "../../services/parseCSS";
+
 const Error = (props) => {
   return (
     <Modal show={props.show} onHide={props.handleClose}>
@@ -30,6 +23,18 @@ const Error = (props) => {
     </Modal>
   );
 };
+const currencies = [
+  "Bitcoin",
+  "Ethereum",
+  "Binance Coin",
+  "Tether",
+  "Solana",
+  "Cardano",
+  "XRP",
+  "Polkadot",
+  "Avalanche",
+  "Shiba",
+];
 const CreateDid = () => {
   const [didState, setDidState] = useState({
     links: [
@@ -39,30 +44,17 @@ const CreateDid = () => {
       },
     ],
   });
-  const [linkState, setLinkState] = useState({});
   const [linkCount, setLinkCount] = useState(1);
-  const [addressCount, setAddressCount] = useState(1);
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
   const [didId, setDidId] = useState(null);
-  const [addresses, setAddresses] = useState([]);
-  const [currencies, setCurrencies] = useState([
-    "Bitcoin",
-    "Ethereum",
-    "BInance Coin",
-    "Tether",
-    "Solana",
-    "Cardano",
-    "XRP",
-    "Polkadot",
-    "Avalanche",
-    "Shiba",
+  const [addresses, setAddresses] = useState([
+    { name: "", value: "", type: "general" },
   ]);
-  const [code, setCode] = useState(
-    "body{\n    color:white;\n  }\n  header{\n font-size:30px;\n}"
-  );
+  const [code, setCode] = useState("");
+
   function handleLinkChange(id, value) {
-    console.log(id, value);
+    // console.log(id, value);
     let links = [...didState.links];
     let [prop, index] = id.split("-");
 
@@ -84,56 +76,7 @@ const CreateDid = () => {
     }
 
     setDidState({ ...didState, links });
-
-    // setLinkState(
-    //   {
-    //     ...linkState,
-    //     [id]: value,
-    //   },
-    //   () => {
-    //     let links = [...didState.links];
-    //     links[id] = value;
-    //     setDidState([links])
-    //   }
-    // );
-
-    // setLinkState({
-    //     didState.links[2].title:2
-    // })
   }
-  function getUsedCurrencies(){
-    let c = []
-    for(let i=0;i<addresses.length;i++){
-      c.push(addresses[i]["name"])
-    }
-
-  }
-  function handleAddressChange(id, value) {
-    console.log(id, value);
-    let dupAddresses = JSON.parse(JSON.stringify(addresses))
-    let [prop, index] = id.split("-");
-    let address = {}
-
-      if (addresses[index]) {
-         address = dupAddresses[index];
-        if (prop === "ta") {
-          address.name = value;
-        } else if (prop === "va") {
-          address.value = value;
-        }
-      } else {
-        address = {};
-        if (prop === "ta") {
-          address.name = value;
-        } else if (prop === "va") {
-          address.value = value;
-        }
-        dupAddresses.push(address)
-
-      }
-      setAddresses(dupAddresses)
-  }
-
   const handleClose = () => {
     setShow(false);
     setError("");
@@ -152,23 +95,6 @@ const CreateDid = () => {
       setDidState({ ...didState, links });
       setLinkCount(linkCount + 1);
     } else handleShow("You can add upto 5 links");
-  }
-  function addAddress() {
-    // let links = [...didState.links];
-    // links.push({
-    //   title: "",
-    //   link: "",
-    // });
-    // setDidState({ ...didState, links });
-    setAddressCount(addressCount + 1);
-  }
-  function removeAddress() {
-    if (addressCount < 2) {
-      handleShow("You can must add a link");
-    } else {
-    
-      setAddressCount(addressCount - 1);
-    }
   }
   function removeLink() {
     if (linkCount < 2) {
@@ -190,7 +116,6 @@ const CreateDid = () => {
               required
               type="text"
               placeholder="LinkedIn, Instagram, Twitter ....."
-              value={linkState?.i?.title}
               onChange={(e) => {
                 handleLinkChange(e.target.id, e.target.value);
               }}
@@ -199,12 +124,11 @@ const CreateDid = () => {
         </Col>
         <Col>
           <Form.Group className="mb-3" controlId={`v-${i}`}>
-            <Form.Label>Title</Form.Label>
+            <Form.Label>URL</Form.Label>
             <Form.Control
               type="text"
               required
               placeholder="e.g https://linked.com/Arnald"
-              value={linkState?.i?.value}
               onChange={(e) => {
                 handleLinkChange(e.target.id, e.target.value);
               }}
@@ -221,22 +145,93 @@ const CreateDid = () => {
     }
     return items;
   }
-  function getAddressItem(i) {
+  function addAddress() {
+    let adds = [...addresses];
+    adds.push({
+      name: "",
+      value: "",
+      type: "general",
+    });
+    setAddresses(adds);
+    // setAddressCount(addressCount + 1);
+  }
+
+  const addCustomAddress = () => {
+    let adds = [...addresses];
+    adds.push({
+      name: "",
+      value: "",
+      type: "custom",
+    });
+    setAddresses(adds);
+  };
+  const removeAddress = () => {
+    if (addresses.length < 2) {
+      handleShow("You can must add an address");
+    } else {
+      let adds = [...addresses];
+      adds.pop();
+      setAddresses(adds);
+    }
+    // if (addressCount < 2) {
+    //   handleShow("You can must add an address");
+    // } else {
+    //   setAddressCount(addressCount - 1);
+    // }
+  };
+
+  const getUpdatedCurrencies = () => {
+    const renderCurrencies = [];
+    currencies.forEach((cur, i) => {
+      if (addresses.findIndex((k) => k.name === cur) === -1)
+        renderCurrencies.push({ value: cur, label: cur });
+      // else
+      //   renderCurrencies.push({ value: cur, label: cur, disabled: true })
+    });
+    return renderCurrencies;
+  };
+  const handleAddressChange = (id, value) => {
+    // console.log(id, value);
+    let dupAddresses = [...addresses];
+    // let dupAddresses = JSON.parse(JSON.stringify(addresses))
+    let [prop, index] = id.split("-");
+    let address = {};
+
+    if (addresses[index]) {
+      address = dupAddresses[index];
+      if (prop === "ta") {
+        address.name = value;
+      } else if (prop === "va") {
+        address.value = value;
+      } else if (prop === "ca") {
+        address.name = value;
+      }
+    } else {
+      address = {};
+      if (prop === "ta") {
+        address.name = value;
+      } else if (prop === "va") {
+        address.value = value;
+      } else if (prop === "ca") {
+        address.name = value;
+      }
+      dupAddresses.push(address);
+    }
+    setAddresses(dupAddresses);
+  };
+  const getAddressItem = (i) => {
     return (
       <Row key={i}>
         <Col>
           <Form.Label>Currency</Form.Label>
-          <select
-            class="form-control"
+          <Select
+            className="custom-select"
             id={`ta-${i}`}
-            onChange={(e) => {
-              handleAddressChange(e.target.id, e.target.value);
-            }}
-          >
-            {currencies.map((e) => (
-              <option>{e}</option>
-            ))}
-          </select>
+            placeholder="select currency"
+            // value={selectedOption}
+            onChange={(sel) => handleAddressChange(`ta-${i}`, sel.value)}
+            options={getUpdatedCurrencies(i)}
+          />
         </Col>
         <Col>
           <Form.Group className="mb-3" controlId={`va-${i}`}>
@@ -245,7 +240,6 @@ const CreateDid = () => {
               type="text"
               required
               placeholder="0x000000000000000"
-              value={linkState?.i?.value}
               onChange={(e) => {
                 handleAddressChange(e.target.id, e.target.value);
               }}
@@ -254,11 +248,45 @@ const CreateDid = () => {
         </Col>
       </Row>
     );
-  }
+  };
+  const getCustomAddressItem = (i) => {
+    return (
+      <Row key={i}>
+        <Col>
+          <Form.Group className="mb-3" controlId={`ca-${i}`}>
+            <Form.Label>Custom Currency</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              placeholder="custom currency"
+              value={addresses[i].name}
+              onChange={(e) => {
+                handleAddressChange(e.target.id, e.target.value);
+              }}
+            />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group className="mb-3" controlId={`va-${i}`}>
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              placeholder="0x000000000000000"
+              onChange={(e) => {
+                handleAddressChange(e.target.id, e.target.value);
+              }}
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+    );
+  };
   function generateAddressTable() {
     const items = [];
-    for (let i = 0; i < addressCount; i++) {
-      items.push(getAddressItem(i));
+    for (let i = 0; i < addresses.length; i++) {
+      if (addresses[i].type === "general") items.push(getAddressItem(i));
+      else items.push(getCustomAddressItem(i));
     }
     return items;
   }
@@ -268,11 +296,40 @@ const CreateDid = () => {
       [id]: value,
     });
   }
-  function submit(e) {
+  const inputValidation = (str) => {
+    let prefix = 'https://viewblock.io/arweave/tx/';
+    return str.startsWith(prefix)
+  }
+  function onSubmit(e) {
     e.preventDefault();
-    let state = JSON.parse(JSON.stringify(didState));
-    state.css = code;
+    if(!(window.koiiWallet && window.koiiWallet.createDID )){
+      handleShow("Install Finne wallet or update it to latest version")
+      return
+    }
+    let state = {...didState}
+    if(!inputValidation(state.picture)) {
+      handleShow("Please input valid arweave tx ID for profile image")
+      return
+    }
+    if(!inputValidation(state.banner)) {
+      handleShow("Please input valid arweave tx ID for banner image")
+      return
+    }
+    try {
+      state.style = parseCss(code);
+    } catch (e) {
+      state.styles = {};
+    }
+    state.code = code;
+    let newAddresses = {};
+    addresses.forEach(function (address) {
+      if (address.name !== "" && address.value !== "") {
+        newAddresses[`${address.name.toLowerCase()}`] = address.value;
+      }
+    });
+    state.addresses = newAddresses;
     console.error(state);
+    return false;
     // window.koiiWallet.createDID(didState).then((txId) => {
     // console.log(txId);
     // burnKOIIAndMigrateContent(txId)
@@ -294,7 +351,7 @@ const CreateDid = () => {
         ""
       )}
 
-      <Form onSubmit={submit}>
+      <Form onSubmit={onSubmit}>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Name</Form.Label>
           <Form.Control
@@ -383,18 +440,25 @@ const CreateDid = () => {
         </Card>
         <Card border="primary">
           <Card.Header>Other Crypto Addresses</Card.Header>
-          <Card.Body>
+          <Card.Body className="crypto-address-area">
             {generateAddressTable()}
 
-            <Button variant="success" onClick={addAddress}>
+            <Button className="mt-10" variant="success" onClick={addAddress}>
               +Add
             </Button>
             <Button
-              style={{ marginLeft: "5px" }}
+              className="mt-10 ml-5"
               variant="danger"
               onClick={removeAddress}
             >
               Remove
+            </Button>
+            <Button
+              className="mt-10 ml-5"
+              variant="success"
+              onClick={addCustomAddress}
+            >
+              Add Custom Address
             </Button>
           </Card.Body>
         </Card>
