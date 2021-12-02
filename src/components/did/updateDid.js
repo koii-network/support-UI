@@ -387,15 +387,16 @@ const UpdateDid = () => {
         setDidState(data);
         setLinkCount(data.links.length);
         const resAdds = [];
-
-        for (let [key, value] of Object.entries(data.addresses)) {
-          console.log(key, value);
-          if (
-            currencies.findIndex((c) => c.toLowerCase() === key.toLowerCase()) >
-            -1
-          )
-            resAdds.push({ name: key, value, type: "general" });
-          else resAdds.push({ name: key, value, type: "custom" });
+        if(data.addresses) {
+          for (let [key, value] of Object.entries(data.addresses)) {
+            console.log(key, value);
+            if (
+              currencies.findIndex((c) => c.toLowerCase() === key.toLowerCase()) >
+              -1
+            )
+              resAdds.push({ name: key, value, type: "general" });
+            else resAdds.push({ name: key, value, type: "custom" });
+          }
         }
         if (resAdds.length === 0)
           resAdds.push({ name: "", value: "", type: "general" });
