@@ -124,7 +124,7 @@ const CreateDid = () => {
         </Col>
         <Col>
           <Form.Group className="mb-3" controlId={`v-${i}`}>
-            <Form.Label>Title</Form.Label>
+            <Form.Label>URL</Form.Label>
             <Form.Control
               type="text"
               required
@@ -308,11 +308,11 @@ const CreateDid = () => {
     }
     let state = {...didState}
     if(!inputValidation(state.picture)) {
-      handleShow("Please input valid arweave image url")
+      handleShow("Please input valid arweave tx ID for profile image")
       return
     }
     if(!inputValidation(state.banner)) {
-      handleShow("Please input valid arweave banner url")
+      handleShow("Please input valid arweave tx ID for banner image")
       return
     }
     try {
