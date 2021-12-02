@@ -128,11 +128,11 @@ const UpdateDid = () => {
         </Col>
         <Col>
           <Form.Group className="mb-3" controlId={`v-${i}`}>
-            <Form.Label>Title</Form.Label>
+            <Form.Label>URL</Form.Label>
             <Form.Control
               type="text"
               required
-              placeholder="e.g https://linked.com/Arnald"
+               placeholder="e.g https://linked.com/Arnald"
               defaultValue={didState.links[i].link}
               onChange={(e) => {
                 handleLinkChange(e.target.id, e.target.value);
@@ -321,6 +321,11 @@ const UpdateDid = () => {
     if(!inputValidation(state.banner)) {
       handleShow("Please input valid arweave banner url")
       return
+    }
+    try {
+      state.style = parseCss(code);
+    } catch (e) {
+      state.styles = {};
     }
     state.css = code;
     let newAddresses = {};
