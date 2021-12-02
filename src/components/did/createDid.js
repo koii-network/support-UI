@@ -296,8 +296,9 @@ const CreateDid = () => {
       [id]: value,
     });
   }
-  const inputValidation = () => {
-    return true
+  const inputValidation = (str) => {
+    let prefix = 'https://viewblock.io/arweave/tx/';
+    return str.startsWith(prefix)
   }
   function onSubmit(e) {
     e.preventDefault();
@@ -308,6 +309,10 @@ const CreateDid = () => {
     let state = {...didState}
     if(!inputValidation(state.picture)) {
       handleShow("Please input valid arweave image url")
+      return
+    }
+    if(!inputValidation(state.banner)) {
+      handleShow("Please input valid arweave banner url")
       return
     }
     try {

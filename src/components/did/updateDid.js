@@ -303,13 +303,25 @@ const UpdateDid = () => {
       [id]: value,
     });
   }
+  const inputValidation = (str) => {
+    let prefix = 'https://viewblock.io/arweave/tx/';
+    return str.startsWith(prefix)
+  }
   function onSubmit(e) {
     e.preventDefault();
     if (!(window.koiiWallet && window.koiiWallet.createDID)) {
       handleShow("Install Finne wallet or update it to latest version");
       return;
     }
-    let state = JSON.parse(JSON.stringify(didState));
+    let state = {...didState}
+    if(!inputValidation(state.picture)) {
+      handleShow("Please input valid arweave image url")
+      return
+    }
+    if(!inputValidation(state.banner)) {
+      handleShow("Please input valid arweave banner url")
+      return
+    }
     state.css = code;
     let newAddresses = {};
     addresses.forEach(function (address) {
