@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Form, Button, Card, Row, Col, Modal } from "react-bootstrap";
-import Select from 'react-select';
+import Select from "react-select";
 import { UnControlled as CodeMirror } from "react-codemirror2";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
@@ -9,6 +9,7 @@ import "codemirror/mode/css/css";
 // const { readContract } = require("smartweave");
 import { getDIdState, updateDID, burnKOIIAndMigrateContent } from "@_koi/did";
 import "./style.css";
+import parseCss from "../../services/parseCSS";
 
 const Error = (props) => {
   return (
@@ -35,8 +36,8 @@ const currencies = [
   "XRP",
   "Polkadot",
   "Avalanche",
-  "Shiba"
-]
+  "Shiba",
+];
 const UpdateDid = () => {
   const [didState, setDidState] = useState({
     links: [
@@ -50,11 +51,11 @@ const UpdateDid = () => {
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
   const [didId, setDidId] = useState(null);
-  const [addresses, setAddresses] = useState([{name: '', value: '', type: 'general'}]);
+  const [addresses, setAddresses] = useState([
+    { name: "", value: "", type: "general" },
+  ]);
   const [didLoaded, setDidLoaded] = useState(false);
-  const [code, setCode] = useState(
-    "body{\n    color:white;\n  }\n  header{\n font-size:30px;\n}"
-  );
+  const [code, setCode] = useState("");
 
   function handleLinkChange(id, value) {
     let links = [...didState.links];
@@ -152,77 +153,77 @@ const UpdateDid = () => {
   function addAddress() {
     let adds = [...addresses];
     adds.push({
-      name: '',
-      value: '',
-      type: 'general'
-    })
-    setAddresses(adds)
+      name: "",
+      value: "",
+      type: "general",
+    });
+    setAddresses(adds);
     // setAddressCount(addressCount + 1);
   }
 
   const addCustomAddress = () => {
     let adds = [...addresses];
     adds.push({
-      name: '',
-      value: '',
-      type: 'custom'
-    })
-    setAddresses(adds)
-  }
+      name: "",
+      value: "",
+      type: "custom",
+    });
+    setAddresses(adds);
+  };
   const removeAddress = () => {
     if (addresses.length < 2) {
       handleShow("You can must add an address");
     } else {
-      let adds = [...addresses]
-      adds.pop()
-      setAddresses(adds)
+      let adds = [...addresses];
+      adds.pop();
+      setAddresses(adds);
     }
     // if (addressCount < 2) {
     //   handleShow("You can must add an address");
     // } else {
     //   setAddressCount(addressCount - 1);
     // }
-  }
+  };
 
   const getUpdatedCurrencies = () => {
-    const renderCurrencies = []
+    const renderCurrencies = [];
     currencies.forEach((cur, i) => {
-      if (addresses.findIndex(k => k.name === cur) === -1)
-        renderCurrencies.push({ value: cur, label: cur })
-      // else 
+      if (addresses.findIndex((k) => k.name === cur) === -1)
+        renderCurrencies.push({ value: cur, label: cur });
+      // else
       //   renderCurrencies.push({ value: cur, label: cur, disabled: true })
-    })
+    });
     return renderCurrencies;
-  }
+  };
   const handleAddressChange = (id, value) => {
     // console.log(id, value);
-    let dupAddresses = [...addresses]
+    let dupAddresses = [...addresses];
     // let dupAddresses = JSON.parse(JSON.stringify(addresses))
     let [prop, index] = id.split("-");
-    let address = {}
+    let address = {};
 
-      if (addresses[index]) {
-         address = dupAddresses[index];
-        if (prop === "ta") {
-          address.name = value;
-        } else if (prop === "va") {
-          address.value = value;
-        } else if (prop === "ca") {
-          address.name = value;
-        }
-      } else {
-        address = {};
-        if (prop === "ta") {
-          address.name = value;
-        } else if (prop === "va") {
-          address.value = value;
-        } else if (prop === "ca") {
-          address.name = value;
-        }
-        dupAddresses.push(address)
+    if (addresses[index]) {
+      address = dupAddresses[index];
+      if (prop === "ta") {
+        address.name = value;
+      } else if (prop === "va") {
+        address.value = value;
+      } else if (prop === "ca") {
+        address.name = value;
       }
-      setAddresses(dupAddresses)
-  }
+    } else {
+      address = {};
+      if (prop === "ta") {
+        address.name = value;
+      } else if (prop === "va") {
+        address.value = value;
+      } else if (prop === "ca") {
+        address.name = value;
+      }
+      dupAddresses.push(address);
+    }
+    setAddresses(dupAddresses);
+  };
   const getAddressItem = (i) => {
     return (
       <Row key={i}>
@@ -253,7 +254,7 @@ const UpdateDid = () => {
         </Col>
       </Row>
     );
-  }
+  };
   const getCustomAddressItem = (i) => {
     return (
       <Row key={i}>
@@ -287,14 +288,12 @@ const UpdateDid = () => {
         </Col>
       </Row>
     );
-  }
+  };
   function generateAddressTable() {
     const items = [];
     for (let i = 0; i < addresses.length; i++) {
-      if(addresses[i].type === 'general')
-        items.push(getAddressItem(i))
-      else
-        items.push(getCustomAddressItem(i))
+      if (addresses[i].type === "general") items.push(getAddressItem(i));
+      else items.push(getCustomAddressItem(i));
     }
     return items;
   }
@@ -306,24 +305,28 @@ const UpdateDid = () => {
   }
   function onSubmit(e) {
     e.preventDefault();
+    if (!(window.koiiWallet && window.koiiWallet.createDID)) {
+      handleShow("Install Finne wallet or update it to latest version");
+      return;
+    }
     let state = JSON.parse(JSON.stringify(didState));
     state.css = code;
     let newAddresses = {};
-    addresses.forEach(function(address) {
-      if(address.name !== "" && address.value !== "") {
-        newAddresses[`${address.name.toLowerCase()}`] = address.value
+    addresses.forEach(function (address) {
+      if (address.name !== "" && address.value !== "") {
+        newAddresses[`${address.name.toLowerCase()}`] = address.value;
       }
-    })
+    });
     state.addresses = newAddresses;
     console.error(state);
-    return false
+    return false;
     // window.koiiWallet.updateDID(didState,didId).then((res)=>{
     //   console.log(res)
     //   setUpdated(true)
     // });
   }
   function getDidStateHandler() {
-    console.log('transaction', didId)
+    console.log("transaction", didId);
     // const data = {
     //   "links": [
     //     {
@@ -361,29 +364,32 @@ const UpdateDid = () => {
     //   },
     //   "css": ".links {\n  color: black;\n}\n\n.name {\n  font-size: 20px;\n}\n\n.description {\n  color: green;\n}\n\n"
     // }
-    
+
     getDIdState(didId).then((res) => {
       console.log(res);
       if (res.status !== 200) {
         handleShow(res.message);
       } else {
-        const data = res.data.data
-        console.log('res data', data)
+        const data = res.data.data;
+        console.log("res data", data);
         setDidState(data);
         setLinkCount(data.links.length);
-        const resAdds = []
-        
+        const resAdds = [];
+
         for (let [key, value] of Object.entries(data.addresses)) {
           console.log(key, value);
-          if(currencies.findIndex( c => c.toLowerCase() === key.toLowerCase()) > -1) 
-            resAdds.push({name: key, value, type: 'general'})
-          else
-            resAdds.push({name: key, value, type: 'custom'})
+          if (
+            currencies.findIndex((c) => c.toLowerCase() === key.toLowerCase()) >
+            -1
+          )
+            resAdds.push({ name: key, value, type: "general" });
+          else resAdds.push({ name: key, value, type: "custom" });
         }
-        if(resAdds.length === 0) resAdds.push({name: '', value: '', type: 'general'})
-        setCode(data.css)
-        setAddresses(resAdds)
-        setDidLoaded(true)
+        if (resAdds.length === 0)
+          resAdds.push({ name: "", value: "", type: "general" });
+        setCode(data.css);
+        setAddresses(resAdds);
+        setDidLoaded(true);
       }
     });
   }
@@ -399,20 +405,22 @@ const UpdateDid = () => {
           handleShow={handleShow}
         ></Error>
       )}
-      { !didLoaded && <div className="did-address-area">
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Enter you DID Id</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="DID Id"
-            value={didId}
-            onChange={(e) => setDidId(e.target.value)}
-          />
-        </Form.Group>
-        <Button onClick={getDidStateHandler} variant="primary" type="buuton">
-          Get
-        </Button>
-      </div>}
+      {!didLoaded && (
+        <div className="did-address-area">
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Enter you DID Id</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="DID Id"
+              value={didId}
+              onChange={(e) => setDidId(e.target.value)}
+            />
+          </Form.Group>
+          <Button onClick={getDidStateHandler} variant="primary" type="buuton">
+            Get
+          </Button>
+        </div>
+      )}
       {didLoaded && (
         <Form onSubmit={onSubmit}>
           <Form.Group className="mb-3" controlId="name">
@@ -505,29 +513,29 @@ const UpdateDid = () => {
             </Card.Body>
           </Card>
           <Card border="primary">
-          <Card.Header>Other Crypto Addresses</Card.Header>
-          <Card.Body className="crypto-address-area">
-            {generateAddressTable()}
+            <Card.Header>Other Crypto Addresses</Card.Header>
+            <Card.Body className="crypto-address-area">
+              {generateAddressTable()}
 
-            <Button className="mt-10" variant="success" onClick={addAddress}>
-              +Add
-            </Button>
-            <Button
-              className="mt-10 ml-5"
-              variant="danger"
-              onClick={removeAddress}
-            >
-              Remove
-            </Button>
-            <Button
-              className="mt-10 ml-5"
-              variant="success"
-              onClick={addCustomAddress}
-            >
-              Add Custom Address
-            </Button>
-          </Card.Body>
-        </Card>
+              <Button className="mt-10" variant="success" onClick={addAddress}>
+                +Add
+              </Button>
+              <Button
+                className="mt-10 ml-5"
+                variant="danger"
+                onClick={removeAddress}
+              >
+                Remove
+              </Button>
+              <Button
+                className="mt-10 ml-5"
+                variant="success"
+                onClick={addCustomAddress}
+              >
+                Add Custom Address
+              </Button>
+            </Card.Body>
+          </Card>
           <Form.Group
             className="mb-3"
             controlId="formBasicCheckbox"

@@ -1,18 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  Form,
-  Button,
-  Card,
-  Row,
-  Col,
-  Modal
-} from "react-bootstrap";
-import Select from 'react-select';
+import { Form, Button, Card, Row, Col, Modal } from "react-bootstrap";
+import Select from "react-select";
 import { UnControlled as CodeMirror } from "react-codemirror2";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
 import "codemirror/mode/css/css";
 import "./style.css";
+import parseCss from "../../services/parseCSS";
 
 const Error = (props) => {
   return (
@@ -39,8 +33,8 @@ const currencies = [
   "XRP",
   "Polkadot",
   "Avalanche",
-  "Shiba"
-]
+  "Shiba",
+];
 const CreateDid = () => {
   const [didState, setDidState] = useState({
     links: [
@@ -54,11 +48,11 @@ const CreateDid = () => {
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
   const [didId, setDidId] = useState(null);
-  const [addresses, setAddresses] = useState([{name: '', value: '', type: 'general'}]);
-  const [code, setCode] = useState(
-    "body{\n    color:white;\n  }\n  header{\n font-size:30px;\n}"
-  );
-  
+  const [addresses, setAddresses] = useState([
+    { name: "", value: "", type: "general" },
+  ]);
+  const [code, setCode] = useState("");
+
   function handleLinkChange(id, value) {
     // console.log(id, value);
     let links = [...didState.links];
@@ -154,77 +148,77 @@ const CreateDid = () => {
   function addAddress() {
     let adds = [...addresses];
     adds.push({
-      name: '',
-      value: '',
-      type: 'general'
-    })
-    setAddresses(adds)
+      name: "",
+      value: "",
+      type: "general",
+    });
+    setAddresses(adds);
     // setAddressCount(addressCount + 1);
   }
 
   const addCustomAddress = () => {
     let adds = [...addresses];
     adds.push({
-      name: '',
-      value: '',
-      type: 'custom'
-    })
-    setAddresses(adds)
-  }
+      name: "",
+      value: "",
+      type: "custom",
+    });
+    setAddresses(adds);
+  };
   const removeAddress = () => {
     if (addresses.length < 2) {
       handleShow("You can must add an address");
     } else {
-      let adds = [...addresses]
-      adds.pop()
-      setAddresses(adds)
+      let adds = [...addresses];
+      adds.pop();
+      setAddresses(adds);
     }
     // if (addressCount < 2) {
     //   handleShow("You can must add an address");
     // } else {
     //   setAddressCount(addressCount - 1);
     // }
-  }
+  };
 
   const getUpdatedCurrencies = () => {
-    const renderCurrencies = []
+    const renderCurrencies = [];
     currencies.forEach((cur, i) => {
-      if (addresses.findIndex(k => k.name === cur) === -1)
-        renderCurrencies.push({ value: cur, label: cur })
-      // else 
+      if (addresses.findIndex((k) => k.name === cur) === -1)
+        renderCurrencies.push({ value: cur, label: cur });
+      // else
       //   renderCurrencies.push({ value: cur, label: cur, disabled: true })
-    })
+    });
     return renderCurrencies;
-  }
+  };
   const handleAddressChange = (id, value) => {
     // console.log(id, value);
-    let dupAddresses = [...addresses]
+    let dupAddresses = [...addresses];
     // let dupAddresses = JSON.parse(JSON.stringify(addresses))
     let [prop, index] = id.split("-");
-    let address = {}
+    let address = {};
 
-      if (addresses[index]) {
-         address = dupAddresses[index];
-        if (prop === "ta") {
-          address.name = value;
-        } else if (prop === "va") {
-          address.value = value;
-        } else if (prop === "ca") {
-          address.name = value;
-        }
-      } else {
-        address = {};
-        if (prop === "ta") {
-          address.name = value;
-        } else if (prop === "va") {
-          address.value = value;
-        } else if (prop === "ca") {
-          address.name = value;
-        }
-        dupAddresses.push(address)
+    if (addresses[index]) {
+      address = dupAddresses[index];
+      if (prop === "ta") {
+        address.name = value;
+      } else if (prop === "va") {
+        address.value = value;
+      } else if (prop === "ca") {
+        address.name = value;
       }
-      setAddresses(dupAddresses)
-  }
+    } else {
+      address = {};
+      if (prop === "ta") {
+        address.name = value;
+      } else if (prop === "va") {
+        address.value = value;
+      } else if (prop === "ca") {
+        address.name = value;
+      }
+      dupAddresses.push(address);
+    }
+    setAddresses(dupAddresses);
+  };
   const getAddressItem = (i) => {
     return (
       <Row key={i}>
@@ -254,7 +248,7 @@ const CreateDid = () => {
         </Col>
       </Row>
     );
-  }
+  };
   const getCustomAddressItem = (i) => {
     return (
       <Row key={i}>
@@ -287,14 +281,12 @@ const CreateDid = () => {
         </Col>
       </Row>
     );
-  }
+  };
   function generateAddressTable() {
     const items = [];
     for (let i = 0; i < addresses.length; i++) {
-      if(addresses[i].type === 'general')
-        items.push(getAddressItem(i))
-      else
-        items.push(getCustomAddressItem(i))
+      if (addresses[i].type === "general") items.push(getAddressItem(i));
+      else items.push(getCustomAddressItem(i));
     }
     return items;
   }
@@ -306,17 +298,26 @@ const CreateDid = () => {
   }
   function onSubmit(e) {
     e.preventDefault();
+    if(!(window.koiiWallet && window.koiiWallet.createDID )){
+      handleShow("Install Finne wallet or update it to latest version")
+      return
+    }
     let state = JSON.parse(JSON.stringify(didState));
-    state.css = code;
+    try {
+      state.style = parseCss(code);
+    } catch (e) {
+      state.styles = {};
+    }
+    state.code = code;
     let newAddresses = {};
-    addresses.forEach(function(address) {
-      if(address.name !== "" && address.value !== "") {
-        newAddresses[`${address.name.toLowerCase()}`] = address.value
+    addresses.forEach(function (address) {
+      if (address.name !== "" && address.value !== "") {
+        newAddresses[`${address.name.toLowerCase()}`] = address.value;
       }
-    })
+    });
     state.addresses = newAddresses;
     console.error(state);
-    return false
+    return false;
     // window.koiiWallet.createDID(didState).then((txId) => {
     // console.log(txId);
     // burnKOIIAndMigrateContent(txId)
