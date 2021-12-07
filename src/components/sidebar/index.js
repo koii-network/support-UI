@@ -29,7 +29,7 @@ function Sidebar() {
           </NavLink>
         </Nav.Item>
         <Nav.Item>
-          <NavLink activeClassName="active" to="Koii-State">
+          <NavLink activeClassName="active" to="koii-state">
           <li className="list-group-item list-group-item-primary">Get KOII State</li>
           </NavLink>
         </Nav.Item>

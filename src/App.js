@@ -1,6 +1,5 @@
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
-import Sidebar from "./components/sidebar/index";
 import Balance from "./components/checkBalance/index";
 import TransactionStatus from './components/TransactionStatus';
 import OwnersNFTs from './components/ownersNFTs';
@@ -20,7 +19,7 @@ function App() {
         <Switch>
           <Route path="/transaction-status" component={TransactionStatus}></Route>
           <Route path="/get-nfts" component={OwnersNFTs}></Route>
-          <Route path="/Koii-State" component={KoiiState}></Route>
+          <Route path="/koii-state" component={KoiiState}></Route>
           <Route path="/attention-State" component={AttentionState}></Route>
           <Route path="/nft-state" component={NFTState}></Route>
           <Route path="/send-koii" component={SendKOII}></Route>
