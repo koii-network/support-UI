@@ -2,7 +2,7 @@ import React from "react";
 import Sidebar from "../sidebar";
 import { tools, arweave } from "../../services/KOII";
 import { useEffect, useState } from "react";
-import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 const Balance = () => {
   const [userAddress, setUserAddress] = useState("");
   const [ArBalance, setUserBalance] = useState("");
@@ -23,46 +23,33 @@ const Balance = () => {
   }
   return (
     <>
-      <Container fluid>
-          <Row>
-              <Col xs={2} id="sidebar-wrapper">      
-                <Sidebar />
-              </Col>
-              <Col  xs={10} id="page-content-wrapper">
-                  this is a test
-              </Col> 
-          </Row>
-
-      </Container>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-2 col-md-offset-12">
+            <Sidebar></Sidebar>
+          </div>
+          <div className="col-md-6">
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Enter User Arweave Address</Form.Label>
+              <Form.Control
+                onChange={addressChangeHandler}
+                type="email"
+                placeholder="User Address"
+              />
+              <Button
+                onClick={getUserBalance}
+                className="mt-2"
+                variant="primary"
+              >
+                Get balance
+              </Button>
+              <h6>{ArBalance}-AR</h6>
+              <h6>{koiiBalance}-KOII</h6>
+            </Form.Group>
+          </div>
+        </div>
+      </div>
     </>
-    // <>
-    //   <div className="container">
-    //     <div className="row">
-    //       <div className="col-md-2 col-md-offset-12">
-    //         <Sidebar></Sidebar>
-    //       </div>
-    //       <div className="col-md-6">
-    //         <Form.Group className="mb-3" controlId="formBasicEmail">
-    //           <Form.Label>Enter User Arweave Address</Form.Label>
-    //           <Form.Control
-    //             onChange={addressChangeHandler}
-    //             type="email"
-    //             placeholder="User Address"
-    //           />
-    //           <Button
-    //             onClick={getUserBalance}
-    //             className="mt-2"
-    //             variant="primary"
-    //           >
-    //             Get balance
-    //           </Button>
-    //           <h6>{ArBalance}-AR</h6>
-    //           <h6>{koiiBalance}-KOII</h6>
-    //         </Form.Group>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </>
   );
 };
 
