@@ -5,9 +5,10 @@
     left: 0;
     min-height: 100vh !important;
     z-index: 100;
-    padding: 48px 30px 30px 30px;
+    padding: 48px 20px 30px 20px !important;
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
     background: #171753;
+    width: 310px !important;
 }
 #sidebar-wrapper{
     min-height: 100vh !important;

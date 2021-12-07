@@ -15,8 +15,23 @@ code {
 }
 
 .cap-sb-title{
-  font-size: 23px;
+  font-size: 21px;
   line-height: 40px;
-  letter-spacing: 3%;
   color: white;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.nav-item a{ text-decoration: none; }
+.nav-item a.active{ text-decoration: underline; }
+.list-group-item-primary {
+  color: white !important;
+  background-color: transparent !important;
+  border: 0px solid rgba(0,0,0,.125) !important;
+  border-bottom: 1px solid white !important;
+  padding: 10px 0 !important;
+  font-family: 'Sora';
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
 }
