@@ -9,7 +9,7 @@ function Sidebar() {
         className="col-md-2 d-none d-md-block sidebar"
       >
         <div className="sidebar-sticky">
-          <h3 className="font-main" style={{  fontSize: "20px" }}>
+          <h3 className="font-main cap-sb-title">
             KOII Support Actions
           </h3>
         </div>

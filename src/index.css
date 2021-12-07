@@ -13,3 +13,10 @@ code {
 .font-main{
   font-family: 'Sora', sans-serif;
 }
+
+.cap-sb-title{
+  font-size: 23px;
+  line-height: 40px;
+  letter-spacing: 3%;
+  color: white;
+}
