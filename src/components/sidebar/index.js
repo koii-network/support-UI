@@ -1,12 +1,12 @@
 import "./style.css";
 import React from "react";
 import { Nav } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 function Sidebar() {
   return (
     <>
       <Nav
-        className="col-md-2 d-none d-md-block  sidebar"
+        className="col-md-2 d-none d-md-block sidebar"
       >
         <div className="sidebar-sticky">
           <h3 className="font-main" style={{  fontSize: "20px" }}>
