@@ -24,6 +24,7 @@ code {
 
 .nav-item a{ text-decoration: none; }
 .nav-item a.active{ text-decoration: underline; }
+.nav-item a.active:hover{ text-decoration: underline; text-decoration-color: white; }
 .list-group-item-primary {
   color: white !important;
   background-color: transparent !important;

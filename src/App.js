@@ -1,4 +1,4 @@
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 import Balance from "./components/checkBalance/index";
 import TransactionStatus from './components/TransactionStatus';
@@ -17,6 +17,7 @@ function App() {
     <Router >
       <div className="App">
         <Switch>
+          <Route path="/balance" exact component={Balance}></Route>
           <Route path="/transaction-status" component={TransactionStatus}></Route>
           <Route path="/get-nfts" component={OwnersNFTs}></Route>
           <Route path="/koii-state" component={KoiiState}></Route>
@@ -27,9 +28,8 @@ function App() {
           <Route path="/send-ar" component={SendAr}></Route>
           <Route path="/bridge-info" component={BridgeInfo}></Route>
           <Route path="/did" exact component={DID}></Route>
-          <Route path="/" exact component={Balance}></Route>
           <Route path="/contract-transactions" exact component={contractTransactions}></Route>
-      
+          <Route path="/" exact render={() => <Redirect to="/balance" />}></Route>
         </Switch>
 
       </div>
