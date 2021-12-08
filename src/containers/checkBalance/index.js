@@ -34,17 +34,17 @@ const Balance = () => {
           </div>
           <div className="col-md-6">
             <div className="page-title">Get Balance</div>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label className="mt-10">Enter User Arweave Address</Form.Label>
+            <Form.Group className="mb-3 mt-20" controlId="formBasicEmail">
+              <Form.Label>Enter User Arweave Address</Form.Label>
               <Form.Control
                 onChange={addressChangeHandler}
                 type="email"
                 placeholder="User Address"
-                className="mt-20"
+                className="mt-10"
               />
               <Button
                 onClick={getUserBalance}
-                className="mt-25"
+                className="mt-20"
                 variant="success"
               >
                 Get balance

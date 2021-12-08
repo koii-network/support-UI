@@ -16,13 +16,12 @@ const KoIIState = () => {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-md-2 ">
+          <div className="col-md-3 col-md-offset-12">
             <Sidebar></Sidebar>
           </div>
           <div className="col-md-6">
-            <h3>Get KOII State</h3>
-
-            <Button onClick={onclickHandler} className="mt-2" variant="primary">
+            <div className="page-title">Get KOII State</div>
+            <Button onClick={onclickHandler} className="mt-20" variant="primary">
               Get State
             </Button>
             {/* <JSONPretty className='mt-3' id="json-pretty" data={trxStatus} theme={monikai}></JSONPretty> */}
@@ -31,7 +30,7 @@ const KoIIState = () => {
             {koiiState ? (
               <ReactJson
                 collapsed={true}
-                style={{ marginTop: "5px",minWidth:"1200px",minHeight:"200px" }}
+                style={{ marginTop: "20px",minHeight:"200px" }}
                 src={koiiState}
                 defaultValue={{}}
                 displayDataTypes={false}

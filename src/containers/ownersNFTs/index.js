@@ -32,21 +32,22 @@ const OwnersNFTs = () => {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-md-2 col-md-offset-12">
+          <div className="col-md-3 col-md-offset-12">
             <Sidebar></Sidebar>
           </div>
           <div className="col-md-6">
-            <h3>Get NFTs Owned by a User</h3>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <div className="page-title">Get NFTs Owned by a User</div>
+            <Form.Group className="mb-3 mt-20" controlId="formBasicEmail">
               <Form.Label>Enter Owner's Wallet address </Form.Label>
               <Form.Control
                 onChange={trxChangeHandler}
                 type="email"
-                placeholder="Owner's Wallet address "
+                placeholder="Owner's Wallet address"
+                className="mt-10"
               />
               <Button
                 onClick={getNfts}
-                className="mt-2"
+                className="mt-20"
                 variant="primary"
               >
                 Get NFTs
@@ -54,7 +55,7 @@ const OwnersNFTs = () => {
               {nfts ? (
               <ReactJson
                 collapsed={true}
-                style={{ marginTop: "5px",minWidth:"1200px",minHeight:"200px" }}
+                style={{ marginTop: "20px",minWidth:"1200px",minHeight:"200px" }}
                 src={nfts}
                 defaultValue={{}}
                 displayDataTypes={false}

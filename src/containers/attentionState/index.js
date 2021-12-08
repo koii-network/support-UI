@@ -15,13 +15,12 @@ const AttentionState = () => {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-md-2 ">
+          <div className="col-md-3 ">
             <Sidebar></Sidebar>
           </div>
           <div className="col-md-6">
-            <h3>Get Attention State</h3>
-
-            <Button onClick={onclickHandler} className="mt-2" variant="primary">
+            <div className="page-title">Get Attention State</div>
+            <Button onClick={onclickHandler} className="mt-20" variant="primary">
               Get State
             </Button>
             {/* <JSONPretty className='mt-3' id="json-pretty" data={trxStatus} theme={monikai}></JSONPretty> */}
@@ -31,7 +30,7 @@ const AttentionState = () => {
               <ReactJson
                 collapsed={true}
                 style={{
-                  marginTop: "5px",
+                  marginTop: "20px",
                   minWidth: "1200px",
                   minHeight: "200px",
                 }}

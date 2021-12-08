@@ -31,7 +31,7 @@ const ContractTransactions = () => {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-md-2 col-md-offset-12">
+          <div className="col-md-3 col-md-offset-12">
             <Sidebar></Sidebar>
           </div>
           <div className="col-md-6">

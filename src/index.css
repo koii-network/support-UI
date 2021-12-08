@@ -75,6 +75,7 @@ input.form-control, input.form-control:focus {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1) !important;
 }
 .btn-success, .btn-primary { background: #9BE7C4 !important; }
+.btn-danger { background: #FFA6A6 !important; }
 .btn:hover{
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.24);
 }

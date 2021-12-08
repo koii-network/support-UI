@@ -31,28 +31,29 @@ const TransactionStatus = () => {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-md-2 col-md-offset-12">
+          <div className="col-md-3 col-md-offset-12">
             <Sidebar></Sidebar>
           </div>
           <div className="col-md-6">
-              <h3>Get transaction Status</h3>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <div className="page-title">Get transaction Status</div>
+            <Form.Group className="mb-3 mt-20" controlId="formBasicEmail">
               <Form.Label>Enter transaction Id</Form.Label>
               <Form.Control
                 onChange={trxChangeHandler}
                 type="email"
                 placeholder="Transaction Id"
+                className="mt-10"
               />
               <Button
                 onClick={getTransactionIdStatus}
-                className="mt-2"
+                className="mt-20"
                 variant="primary"
               >
                 Get Status
               </Button>
               {/* <JSONPretty className='mt-3' id="json-pretty" data={trxStatus} theme={monikai}></JSONPretty> */}
               {}
-              <ReactJson style={{marginTop:"5px"}} src={trxStatus} defaultValue={{}} theme="chalk" />
+              <ReactJson style={{marginTop:"20px"}} src={trxStatus} defaultValue={{}} theme="chalk" />
             </Form.Group>
           </div>
         </div>
