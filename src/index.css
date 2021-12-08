@@ -21,6 +21,14 @@ code {
   text-transform: uppercase;
   text-align: center;
 }
+.page-title{ 
+  font-family: Sora;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.02em;
+  color: #171753;
+  margin-top: 50px;
+}
 
 .nav-item a{ text-decoration: none; }
 .nav-item a.active{ text-decoration: underline; }

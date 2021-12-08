@@ -1,7 +1,7 @@
 import "./style.css";
 import React from "react";
 import { Nav } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 function Sidebar() {
   return (
     <>
@@ -14,9 +14,9 @@ function Sidebar() {
           </h3>
         </div>
         <Nav.Item>
-          <Link activeClassName="active" to="/balance">
+          <NavLink activeClassName="active" to="/balance">
           <li className="list-group-item list-group-item-primary">Get Balance</li>
-          </Link>
+          </NavLink>
         </Nav.Item>
         <Nav.Item>
           <NavLink activeClassName="active" to="transaction-status">

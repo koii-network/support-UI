@@ -29,6 +29,7 @@ const Balance = () => {
             <Sidebar></Sidebar>
           </div>
           <div className="col-md-6">
+            <div className="page-title">Get Balance</div>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Enter User Arweave Address</Form.Label>
               <Form.Control
