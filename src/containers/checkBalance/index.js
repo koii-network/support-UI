@@ -1,7 +1,7 @@
 import React from "react";
 import Sidebar from "theme/sidebar";
 import { tools, arweave } from "../../services/KOII";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 const Balance = () => {
   const [userAddress, setUserAddress] = useState("");

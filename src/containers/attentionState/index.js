@@ -1,8 +1,7 @@
 import React from "react";
 import Sidebar from "theme/sidebar";
-import { tools, arweave } from "../../services/KOII";
-import { useEffect, useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { useState } from "react";
+import { Button } from "react-bootstrap";
 import ReactJson from "react-json-view";
 const AttentionState = () => {
   const [attentionState, setAttentionState] = useState(null);

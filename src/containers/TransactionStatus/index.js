@@ -1,13 +1,12 @@
 import React from "react";
 import Sidebar from "theme/sidebar";
-import { tools, arweave } from "../../services/KOII";
-import { useEffect, useState } from "react";
+import { arweave } from "services/KOII";
+import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import ReactJson from 'react-json-view'
 const TransactionStatus = () => {
   const [trxId, setTrxId] = useState("");
   const [trxStatus, setTrxStatus] = useState("");
-  const [koiiBalance, setKoiiBalance] = useState("");
   function getTransactionIdStatus() {
     arweave.transactions
       .getStatus(trxId)

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Button, Card, Row, Col, Modal } from "react-bootstrap";
 import Select from "react-select";
 import { UnControlled as CodeMirror } from "react-codemirror2";
@@ -6,7 +6,7 @@ import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
 import "codemirror/mode/css/css";
 import "./style.css";
-import parseCss from "../../services/parseCSS";
+import parseCss from "services/parseCSS";
 const Error = (props) => {
   return (
     <Modal show={props.show} onHide={props.handleClose}>
