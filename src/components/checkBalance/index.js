@@ -31,21 +31,22 @@ const Balance = () => {
           <div className="col-md-6">
             <div className="page-title">Get Balance</div>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Enter User Arweave Address</Form.Label>
+              <Form.Label className="mt-10">Enter User Arweave Address</Form.Label>
               <Form.Control
                 onChange={addressChangeHandler}
                 type="email"
                 placeholder="User Address"
+                className="mt-20"
               />
               <Button
                 onClick={getUserBalance}
-                className="mt-2"
-                variant="primary"
+                className="mt-25"
+                variant="success"
               >
                 Get balance
               </Button>
-              <h6>{ArBalance}-AR</h6>
-              <h6>{koiiBalance}-KOII</h6>
+              <div className="mt-20 lbl1">{ArBalance}-AR</div>
+              <div className="lbl1">{koiiBalance}-KOII</div>
             </Form.Group>
           </div>
         </div>

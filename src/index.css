@@ -9,7 +9,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+.mt-10{ margin-top: 10px;}
+.mt-20{ margin-top: 20px;}
+.mt-25{ margin-top: 25px;}
 .font-main{
   font-family: 'Sora', sans-serif;
 }
@@ -34,23 +36,22 @@ code {
   font-size: 18px;
   line-height: 24px;
   color: #171753;
-  margin-top: 12px;
 }
 input.form-control, input.form-control:focus {
   background-color: #8585bc7a;
   border-radius: 4px;
+  padding: 10px;
   font-family: Sora;
   font-size: 18px;
   line-height: 24px;
+  letter-spacing: -0.5px !important;
   color: #171753;
-  margin-top: 20px;
   outline: none;
   box-shadow: none;
   border: 0px solid transparent;
 }
 
 .btn{
-  background: #9BE7C4 !important;
   border-radius: 4px !important;
   border: none !important;
   font-family: Sora !important;
@@ -63,6 +64,7 @@ input.form-control, input.form-control:focus {
   padding: 12px 15px !important;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 }
+.btn-success { background: #9BE7C4 !important; }
 .btn:hover{
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.24);
 }
