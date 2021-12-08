@@ -29,7 +29,43 @@ code {
   color: #171753;
   margin-top: 50px;
 }
+.form-label{ 
+  font-family: Sora;
+  font-size: 18px;
+  line-height: 24px;
+  color: #171753;
+  margin-top: 12px;
+}
+input.form-control, input.form-control:focus {
+  background-color: #8585bc7a;
+  border-radius: 4px;
+  font-family: Sora;
+  font-size: 18px;
+  line-height: 24px;
+  color: #171753;
+  margin-top: 20px;
+  outline: none;
+  box-shadow: none;
+  border: 0px solid transparent;
+}
 
+.btn{
+  background: #9BE7C4 !important;
+  border-radius: 4px !important;
+  border: none !important;
+  font-family: Sora !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 15px !important;
+  text-align: center !important;
+  letter-spacing: 0.005em !important;
+  color: #171753 !important;
+  padding: 12px 15px !important;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+.btn:hover{
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.24);
+}
 .nav-item a{ text-decoration: none; }
 .nav-item a.active{ text-decoration: underline; }
 .nav-item a.active:hover{ text-decoration: underline; text-decoration-color: white; }
