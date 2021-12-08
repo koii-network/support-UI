@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidebar from "../sidebar";
+import Sidebar from "theme/sidebar";
 import { Form, Button, Tabs, Tab } from "react-bootstrap";
 import CreateDid from "./createDid";
 import UpdateDid from './updateDid';

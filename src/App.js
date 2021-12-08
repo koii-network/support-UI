@@ -1,16 +1,16 @@
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
-import Balance from "./components/checkBalance/index";
-import TransactionStatus from './components/TransactionStatus';
-import OwnersNFTs from './components/ownersNFTs';
-import KoiiState from './components/koiiState';
-import AttentionState from './components/attentionState';
-import SendKOII from './components/sendKOII';
-import SendAr from ".//components/sendAr";
-import NFTState from './components/nftState';
-import BridgeInfo from './components/bridgeinfo';
-import contractTransactions from "./components/contractTransactions";
-import DID from "./components/did"
+import Balance from "./containers/checkBalance/index";
+import TransactionStatus from './containers/TransactionStatus';
+import OwnersNFTs from './containers/ownersNFTs';
+import KoiiState from './containers/koiiState';
+import AttentionState from './containers/attentionState';
+import SendKOII from './containers/sendKOII';
+import SendAr from ".//containers/sendAr";
+import NFTState from './containers/nftState';
+import BridgeInfo from './containers/bridgeinfo';
+import contractTransactions from "./containers/contractTransactions";
+import DID from "./containers/did"
 
 function App() {
   return (

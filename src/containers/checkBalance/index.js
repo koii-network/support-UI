@@ -1,24 +1,28 @@
 import React from "react";
-import Sidebar from "../sidebar";
+import Sidebar from "theme/sidebar";
 import { tools, arweave } from "../../services/KOII";
 import { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 const Balance = () => {
   const [userAddress, setUserAddress] = useState("");
-  const [ArBalance, setUserBalance] = useState("");
+  const [arBalance, setUserBalance] = useState("");
   const [koiiBalance, setKoiiBalance] = useState("");
   function getUserBalance() {
-    arweave.wallets.getBalance(userAddress).then((balance) => {
-      setUserBalance(arweave.ar.winstonToAr(balance));
-    });
-    tools.getKoiiState().then((state) => {
-      if (userAddress !== undefined && userAddress in state.balances)
-        setKoiiBalance(state.balances[userAddress]);
-      else setKoiiBalance(0);
-    });
+    if(userAddress) {
+      arweave.wallets.getBalance(userAddress).then((balance) => {
+        setUserBalance(arweave.ar.winstonToAr(balance));
+      });
+      tools.getKoiiState().then((state) => {
+        if (userAddress !== undefined && userAddress in state.balances)
+          setKoiiBalance(state.balances[userAddress]);
+        else setKoiiBalance(0);
+      });
+    }else{
+
+    }
   }
   function addressChangeHandler(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setUserAddress(e.target.value);
   }
   return (
@@ -45,8 +49,8 @@ const Balance = () => {
               >
                 Get balance
               </Button>
-              <div className="mt-20 lbl1">{ArBalance}-AR</div>
-              <div className="lbl1">{koiiBalance}-KOII</div>
+              <div className="mt-20 lbl1 d-flex">{arBalance && <div className="lbl-balance">{arBalance}</div>} AR</div>
+              <div className="mt-10 lbl1 d-flex">{koiiBalance && <div className="lbl-balance">{koiiBalance}</div>}KOII</div>
             </Form.Group>
           </div>
         </div>

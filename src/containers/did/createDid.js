@@ -7,7 +7,6 @@ import "codemirror/theme/material.css";
 import "codemirror/mode/css/css";
 import "./style.css";
 import parseCss from "../../services/parseCSS";
-
 const Error = (props) => {
   return (
     <Modal show={props.show} onHide={props.handleClose}>

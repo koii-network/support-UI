@@ -1,33 +1,34 @@
 import React from "react";
-import Sidebar from "../sidebar";
+import Sidebar from "theme/sidebar";
 import { tools, arweave } from "../../services/KOII";
 import { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-
-const SendAr = () => {
+const SendKOII = () => {
   const [userAddress, setUserAddress] = useState("");
   const [qty, setQty] = useState(0);
   const [trxId, setTrxId] = useState(null);
-
   async function sendKOII() {
-    await window.koiiWallet.connect();
-    tools.transfer(qty, userAddress, "AR").then(setTrxId);
+    await window.koiiWallet.connect()
+    tools.transfer(qty,userAddress, "KOI").then(setTrxId)
+
   }
   function addressChangeHandler(e) {
     setUserAddress(e.target.value);
   }
-  function qtyChangeHandler(e) {
+  function  qtyChangeHandler(e) {
+
     setQty(e.target.value);
   }
   return (
     <>
       <div className="container">
         <div className="row">
+
           <div className="col-md-2 col-md-offset-12">
             <Sidebar></Sidebar>
           </div>
           <div className="col-md-6">
-            <h3>Send AR</h3>
+          <h3>Send KOII</h3>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Enter User Arweave Address</Form.Label>
               <Form.Control
@@ -41,11 +42,15 @@ const SendAr = () => {
                 type="email"
                 placeholder="Quantity"
               />
-              <Button onClick={sendKOII} className="mt-2" variant="primary">
-                Send AR
+              <Button
+                onClick={sendKOII}
+                className="mt-2"
+                variant="primary"
+              >
+                Send KOII
               </Button>
             </Form.Group>
-            {trxId?(<p>Ar sent your trxId is {trxId}</p>):""}
+            {trxId?(<p>KOII sent your trxId is {trxId}</p>):""}
           </div>
         </div>
       </div>
@@ -53,4 +58,4 @@ const SendAr = () => {
   );
 };
 
-export default SendAr;
+export default SendKOII;

@@ -23,6 +23,16 @@ code {
   text-transform: uppercase;
   text-align: center;
 }
+.lbl1{
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: #237B75;
+}
+.lbl1 .lbl-balance{
+  width: 200px;
+  color: #171753;
+}
 .page-title{ 
   font-family: Sora;
   font-size: 32px;
@@ -51,7 +61,7 @@ input.form-control, input.form-control:focus {
   border: 0px solid transparent;
 }
 
-.btn{
+.btn, .btn:focus{
   border-radius: 4px !important;
   border: none !important;
   font-family: Sora !important;
@@ -62,9 +72,9 @@ input.form-control, input.form-control:focus {
   letter-spacing: 0.005em !important;
   color: #171753 !important;
   padding: 12px 15px !important;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1) !important;
 }
-.btn-success { background: #9BE7C4 !important; }
+.btn-success, .btn-primary { background: #9BE7C4 !important; }
 .btn:hover{
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.24);
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import ReactJson from 'react-json-view';
 import ReactTooltip from 'react-tooltip';
-import Sidebar from "../sidebar";
+import Sidebar from "theme/sidebar";
 
 const BridgeInfo = () => {
   const ETH = () => (
