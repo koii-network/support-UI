@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Button, Card, Row, Col, Modal } from "react-bootstrap";
 import Select from "react-select";
 import { UnControlled as CodeMirror } from "react-codemirror2";
@@ -7,7 +7,7 @@ import "codemirror/theme/material.css";
 import "codemirror/mode/css/css";
 // import Arweave from "arweave";
 // const { readContract } = require("smartweave");
-import { getDIdState, updateDID, burnKOIIAndMigrateContent } from "@_koi/did";
+import { getDIdState, updateDID } from "@_koi/did";
 import "./style.css";
 import parseCss from "../../services/parseCSS";
 

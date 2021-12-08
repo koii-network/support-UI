@@ -10,15 +10,16 @@ const DID = () => {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-md-2 ">
+          <div className="col-md-3">
             <Sidebar></Sidebar>
           </div>
           <div className="col-md-6">
+            <div className="page-title">DID</div>
             <Tabs
               id="controlled-tab-example"
               activeKey={key}
               onSelect={(k) => setKey(k)}
-              className="mb-3"
+              className="mb-3 mt-20"
             >
               <Tab eventKey="create" title="Create DID" />
               <Tab eventKey="update" title="Update DID" />

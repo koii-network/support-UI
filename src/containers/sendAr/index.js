@@ -1,7 +1,7 @@
 import React from "react";
 import Sidebar from "theme/sidebar";
-import { tools, arweave } from "../../services/KOII";
-import { useEffect, useState } from "react";
+import { tools } from "../../services/KOII";
+import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 const SendAr = () => {
@@ -27,25 +27,27 @@ const SendAr = () => {
             <Sidebar></Sidebar>
           </div>
           <div className="col-md-6">
-            <h3>Send AR</h3>
+            <div className="page-title">Send AR</div>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Enter User Arweave Address</Form.Label>
+              <Form.Label className="mt-20">Enter User Arweave Address</Form.Label>
               <Form.Control
                 onChange={addressChangeHandler}
                 type="email"
                 placeholder="User Address"
+                className="mt-10"
               />
-              <Form.Label>Enter Quantity</Form.Label>
+              <Form.Label className="mt-20">Enter Quantity</Form.Label>
               <Form.Control
                 onChange={qtyChangeHandler}
                 type="email"
                 placeholder="Quantity"
+                className="mt-10"
               />
-              <Button onClick={sendKOII} className="mt-2" variant="primary">
+              <Button onClick={sendKOII} className="mt-20" variant="primary">
                 Send AR
               </Button>
             </Form.Group>
-            {trxId?(<p>Ar sent your trxId is {trxId}</p>):""}
+            {trxId?(<p className="mt-20">Ar sent your trxId is {trxId}</p>):""}
           </div>
         </div>
       </div>

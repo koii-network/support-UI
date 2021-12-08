@@ -1,7 +1,7 @@
 import React from "react";
 import Sidebar from "theme/sidebar";
-import { tools, arweave } from "../../services/KOII";
-import { useEffect, useState } from "react";
+import { tools } from "../../services/KOII";
+import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 const SendKOII = () => {
   const [userAddress, setUserAddress] = useState("");
@@ -23,34 +23,35 @@ const SendKOII = () => {
     <>
       <div className="container">
         <div className="row">
-
           <div className="col-md-3 col-md-offset-12">
             <Sidebar></Sidebar>
           </div>
           <div className="col-md-6">
-          <h3>Send KOII</h3>
+            <div className="page-title">Send KOII</div>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Enter User Arweave Address</Form.Label>
+              <Form.Label className="mt-20">Enter User Arweave Address</Form.Label>
               <Form.Control
                 onChange={addressChangeHandler}
                 type="email"
                 placeholder="User Address"
+                className="mt-10"
               />
-              <Form.Label>Enter Quantity</Form.Label>
+              <Form.Label className="mt-20">Enter Quantity</Form.Label>
               <Form.Control
                 onChange={qtyChangeHandler}
                 type="email"
                 placeholder="Quantity"
+                className="mt-10"
               />
               <Button
                 onClick={sendKOII}
-                className="mt-2"
+                className="mt-20"
                 variant="primary"
               >
                 Send KOII
               </Button>
             </Form.Group>
-            {trxId?(<p>KOII sent your trxId is {trxId}</p>):""}
+            {trxId?(<p className="mt-20">KOII sent your trxId is {trxId}</p>):""}
           </div>
         </div>
       </div>

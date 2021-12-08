@@ -22,16 +22,19 @@ code {
   color: white;
   text-transform: uppercase;
   text-align: center;
+  font-family: 'Sora', sans-serif;
 }
 .lbl1{
   font-weight: 600;
   font-size: 18px;
   line-height: 24px;
   color: #237B75;
+  font-family: 'Sora', sans-serif;
 }
 .lbl1 .lbl-balance{
   width: 200px;
   color: #171753;
+  font-family: 'Sora', sans-serif;
 }
 .page-title{ 
   font-family: Sora;
@@ -40,6 +43,12 @@ code {
   letter-spacing: -0.02em;
   color: #171753;
   margin-top: 50px;
+}
+.lbl2{
+  font-size: 18px;
+  line-height: 24px;
+  color: #171753;
+  font-family: 'Sora', sans-serif;
 }
 .form-label{ 
   font-family: Sora;

@@ -1,4 +1,4 @@
-const { toCSS, toJSON } = require("cssjson");
+const { toJSON } = require("cssjson");
 const camelCase = require("camelcase");
 const classes = ["description","name","links", "background"];
 

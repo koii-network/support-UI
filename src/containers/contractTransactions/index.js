@@ -35,18 +35,19 @@ const ContractTransactions = () => {
             <Sidebar></Sidebar>
           </div>
           <div className="col-md-6">
-            <h3>Get KOII State</h3>
+            <div className="page-title">Get KOII State</div>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Contract IDs (comma separated)</Form.Label>
+              <Form.Label className="mt-20">Contract IDs (comma separated)</Form.Label>
               <Form.Control
                 onChange={contractChangeHandler}
                 as="textarea"
                 placeholder="Contract IDs"
                 defaultValue={defaultContract}
+                className="mt-10"
               />
               <Button
                 onClick={getTransactions}
-                className="mt-2"
+                className="mt-20"
                 variant="primary"
                 type="submit"
               >

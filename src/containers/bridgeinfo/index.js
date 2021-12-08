@@ -108,28 +108,26 @@ const BridgeInfo = () => {
             <Sidebar></Sidebar>
           </div>
           <div className="col-md-6">
-            <h3>Bridge Lookup</h3>
-            <h5>The bridge lookup is where you can find any NFT that has crossed a Koii Bridge.</h5>
-            <h5>You can see its origins and its path across the decentralized web, and the stones it has stepped on along the way.</h5>
-            <br></br>
-            <br></br>
-            <h5>Where did you get your NFT?</h5>
+            <div className="page-title">Bridge Lookup</div>
+            <div className="lbl2 mt-20">The bridge lookup is where you can find any NFT that has crossed a Koii Bridge.</div>
+            <div className="lbl2 mt-10">You can see its origins and its path across the decentralized web, and the stones it has stepped on along the way.</div>
+            <div className="lbl2 mt-20">Where did you get your NFT?</div>
 
             <div className="row">
               <div className="col-md-6">
                 <div className="d-grid gap-2">
-              <Button onClick={chooseETH} className="mt-2 mb-3" size="md" variant="primary">
+              <Button onClick={chooseETH} className="mt-20 mb-3" size="md" variant="primary">
                 Opensea
               </Button>
               
               </div>
               </div>
               <div className="col-md-6">
-              <div className="d-grid gap-2">
-              <Button onClick={chooseAR} className="mt-2 mb-3" size="md"  variant="primary">
-                Arweave
-              </Button>
-              </div>
+                <div className="d-grid gap-2">
+                  <Button onClick={chooseAR} className="mt-20 mb-3" size="md"  variant="primary">
+                    Arweave
+                  </Button>
+                </div>
               </div>
               { showar ? <AR /> : null }
               { showeth ? <ETH /> : null }
