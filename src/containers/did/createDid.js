@@ -225,6 +225,7 @@ const CreateDid = () => {
           <Form.Label>Currency</Form.Label>
           <Select
             className="custom-select"
+            classNamePrefix="react-select"
             id={`ta-${i}`}
             placeholder="select currency"
             // value={selectedOption}
@@ -337,8 +338,8 @@ const CreateDid = () => {
   }
 
   return (
-    <div>
-      <h3>Create DID</h3>
+    <div className="mb-4">
+      <div className="page-title">Create DID</div>
       {error ? (
         <Error
           show={show}
@@ -352,7 +353,7 @@ const CreateDid = () => {
 
       <Form onSubmit={onSubmit}>
         <Form.Group className="mb-3" controlId="name">
-          <Form.Label>Name</Form.Label>
+          <Form.Label className="mt-20">Name</Form.Label>
           <Form.Control
             type="text"
             required
@@ -454,7 +455,7 @@ const CreateDid = () => {
             </Button>
             <Button
               className="mt-10 ml-5"
-              variant="success"
+              variant="info"
               onClick={addCustomAddress}
             >
               Add Custom Address
@@ -483,12 +484,12 @@ const CreateDid = () => {
             setCode(value);
           }}
         />
-        <Button variant="primary" type="submit">
+        <Button className="mt-20" variant="primary" type="submit">
           Submit
         </Button>
       </Form>
       {didId ? (
-        <h3>
+        <h3 className="lbl2">
           DID Deployed. see your did at <code>https://arweave.net/{didId}</code>
         </h3>
       ) : (

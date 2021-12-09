@@ -44,12 +44,18 @@ code {
   color: #171753;
   margin-top: 50px;
 }
-.lbl2{
+.lbl2, .card-header{
   font-size: 18px;
   line-height: 24px;
   color: #171753;
   font-family: 'Sora', sans-serif;
 }
+.card {
+  margin-top: 20px;
+  border-width: 0px !important;
+  box-shadow: 0px 4px 8px rgb(0 0 0 / 30%) !important;
+}
+
 .form-label{ 
   font-family: Sora;
   font-size: 18px;
@@ -85,6 +91,13 @@ input.form-control, input.form-control:focus {
 }
 .btn-success, .btn-primary { background: #9BE7C4 !important; }
 .btn-danger { background: #FFA6A6 !important; }
+.btn-info { 
+  background-color: #fff;
+  border: 1px solid #171753 !important;
+}
+.btn-info:hover { 
+  background-color: #fff !important;
+}
 .btn:hover{
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.24);
 }
@@ -101,4 +114,12 @@ input.form-control, input.form-control:focus {
   font-weight: 600;
   font-size: 14px;
   line-height: 24px;
+}
+
+.react-select__control{ 
+  min-height: 44px !important;
+}
+.react-select__single-value{
+  font-family: 'Sora' !important;
+  color: #171753 !important;
 }
