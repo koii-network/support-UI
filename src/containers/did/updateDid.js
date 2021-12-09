@@ -232,6 +232,7 @@ const UpdateDid = () => {
           {addresses[i].name !== '' &&
             <Select
               className="custom-select"
+              classNamePrefix="react-select"
               id={`ta-${i}`}
               placeholder="select currency"
               defaultValue={{ value: addresses[i].name, label: addresses[i].name }}
@@ -418,8 +419,8 @@ const UpdateDid = () => {
     });
   }
   return (
-    <div>
-      <h3>Update DID</h3>
+    <div className="mb-4">
+      <div className="page-title">Update DID</div>
       {/* {didLoaded ? (<h4>DID Update Initialized</h4>) :""} */}
       {error && (
         <Error
@@ -432,7 +433,7 @@ const UpdateDid = () => {
       {!didLoaded && (
         <div className="did-address-area">
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Enter you DID Id</Form.Label>
+            <Form.Label className="mt-20">Enter you DID Id</Form.Label>
             <Form.Control
               type="text"
               placeholder="DID Id"
@@ -574,7 +575,7 @@ const UpdateDid = () => {
               setCode(value);
             }}
           />
-          <Button variant="primary" type="submit" className="mt-10">
+          <Button variant="primary" type="submit" className="mt-20">
             Update
           </Button>
         </Form>
