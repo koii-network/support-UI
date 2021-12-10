@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../sidebar";
 
 const chunkSizeLimit = 100;
-let chunkCount = 0;
 
 function fetchNFTChunk(cursor) {
   const cursorMarker = "[[cursor]]";
@@ -46,7 +45,6 @@ function checkAndFetchNextChunk(data, alreadyFetchedDataSize = 0) {
   const alreadyFetchedDataSizeWithCurrChunk =
     getChunkDataSize(data) + alreadyFetchedDataSize;
   if (isMaxChunkSize(data)) {
-    chunkCount++;
     return fetchNFTChunk(getChunkLastCursor(data)).then((newData) =>
       checkAndFetchNextChunk(newData, alreadyFetchedDataSizeWithCurrChunk)
     );
@@ -119,12 +117,18 @@ export default function KoiiStats() {
   }, [fetchTrigger]);
 
   const [dataTransfer, setDataTransfer] = useState(0);
+  const [dataTransferLoading, setDataTransferLoading] = useState(false);
+  const [dataTransferFetchError, setDataTransferFetchError] = useState(false);
 
   useEffect(() => {
+    setDataTransferLoading(true);
     fetchNFTChunk()
       .then((data) => checkAndFetchNextChunk(data))
-      .then(setDataTransfer)
-      .then(() => console.log("chunks count", chunkCount));
+      .then((size) => {
+        setDataTransfer(size);
+        setDataTransferLoading(false);
+      })
+      .catch(() => setDataTransferFetchError(true));
   }, []);
 
   return (
@@ -174,7 +178,15 @@ export default function KoiiStats() {
               <span className="fs-5">data size stored on Arweave</span>
             </div>
             <div className="col-6">
-              <span className="fs-5">{formatBytes(dataTransfer)}</span>
+              <span className="fs-5">
+                {dataTransferFetchError ? (
+                  "fetch error"
+                ) : dataTransferLoading ? (
+                  <div className="loader"></div>
+                ) : (
+                  formatBytes(dataTransfer)
+                )}
+              </span>
             </div>
           </div>
           <div className="row  pt-3">
