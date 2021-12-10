@@ -54,6 +54,15 @@ function checkAndFetchNextChunk(data, alreadyFetchedDataSize = 0) {
   return Promise.resolve(alreadyFetchedDataSizeWithCurrChunk);
 }
 
+function formatBytes(bytes, decimals = 2) {
+  if (bytes === 0) return "0 Bytes";
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+}
+
 const refreshIntervalValue = 5000;
 
 export default function KoiiStats() {
@@ -165,7 +174,7 @@ export default function KoiiStats() {
               <span className="fs-5">data size stored on Arweave</span>
             </div>
             <div className="col-6">
-              <span className="fs-5">{dataTransfer.toLocaleString()}</span>
+              <span className="fs-5">{formatBytes(dataTransfer)}</span>
             </div>
           </div>
           <div className="row  pt-3">
