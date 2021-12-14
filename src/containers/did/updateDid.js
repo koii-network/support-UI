@@ -10,22 +10,23 @@ import "codemirror/mode/css/css";
 import { getDIdState, updateDID } from "@_koi/did";
 import "./style.css";
 import parseCss from "../../services/parseCSS";
+import Error from "components/errorModal";
 
-const Error = (props) => {
-  return (
-    <Modal show={props.show} onHide={props.handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>{props.message}</Modal.Body>
-      <Modal.Footer>
-        <Button variant="primary" onClick={props.handleClose}>
-          OK
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  );
-};
+// const Error = (props) => {
+//   return (
+//     <Modal show={props.show} onHide={props.handleClose}>
+//       <Modal.Header closeButton>
+//         <Modal.Title>Modal heading</Modal.Title>
+//       </Modal.Header>
+//       <Modal.Body>{props.message}</Modal.Body>
+//       <Modal.Footer>
+//         <Button variant="primary" onClick={props.handleClose}>
+//           OK
+//         </Button>
+//       </Modal.Footer>
+//     </Modal>
+//   );
+// };
 const currencies = [
   "Bitcoin",
   "Ethereum",
@@ -427,7 +428,6 @@ const UpdateDid = () => {
           show={show}
           message={error}
           handleClose={handleClose}
-          handleShow={handleShow}
         ></Error>
       )}
       {!didLoaded && (

@@ -7,21 +7,22 @@ import "codemirror/theme/material.css";
 import "codemirror/mode/css/css";
 import "./style.css";
 import parseCss from "services/parseCSS";
-const Error = (props) => {
-  return (
-    <Modal show={props.show} onHide={props.handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>{props.message}</Modal.Body>
-      <Modal.Footer>
-        <Button variant="primary" onClick={props.handleClose}>
-          OK
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  );
-};
+import Error from "components/errorModal";
+// const Error = (props) => {
+//   return (
+//     <Modal show={props.show} onHide={props.handleClose}>
+//       <Modal.Header closeButton>
+//         <Modal.Title>Modal heading</Modal.Title>
+//       </Modal.Header>
+//       <Modal.Body>{props.message}</Modal.Body>
+//       <Modal.Footer>
+//         <Button variant="primary" onClick={props.handleClose}>
+//           OK
+//         </Button>
+//       </Modal.Footer>
+//     </Modal>
+//   );
+// };
 const currencies = [
   "Bitcoin",
   "Ethereum",
@@ -345,7 +346,6 @@ const CreateDid = () => {
           show={show}
           message={error}
           handleClose={handleClose}
-          handleShow={handleShow}
         ></Error>
       ) : (
         ""
